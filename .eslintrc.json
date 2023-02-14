@@ -177,7 +177,7 @@
             "warn",
             {
                 "ignoreEnums": true,
-                "ignore": [0, 1, -1, 2]
+                "ignore": [0, 1, -1]
             }
         ],
         "camelcase": "off",
