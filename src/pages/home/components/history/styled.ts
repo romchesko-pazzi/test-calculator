@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const History = styled.div`
-  background-color: aqua;
   flex: 1;
+  position: relative;
 `;
 
 export const Title = styled.h3`
@@ -13,8 +13,14 @@ export const Title = styled.h3`
 `;
 
 export const Element = styled.div`
-  background: #9369a2;
   font-size: 2rem;
   text-align: center;
   margin: 2rem 0 2rem 0;
+`;
+
+export const BorderLeft = styled.div`
+  border-left: 0.13rem solid #a1a1a1;
+  position: absolute;
+  top: 2rem;
+  bottom: 2rem;
 `;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Element, History, Title } from './styled';
+import { Element, History, Title, BorderLeft } from './styled';
 
 import { useAppSelector } from 'hooks/useSelector';
 
@@ -18,6 +18,7 @@ export const HistoryComponent = () => {
           {`= ${item.result}`}
         </Element>
       ))}
+      <BorderLeft />
     </History>
   );
 };

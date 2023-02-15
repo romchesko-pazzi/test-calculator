@@ -6,6 +6,7 @@ import {
   Operation,
   PreviousOperand,
   PreviousOperandBox,
+  Line,
 } from './displayStyles';
 
 import { useAppSelector } from 'hooks/useSelector';
@@ -23,6 +24,7 @@ export const Display = () => {
         <Operation>{operation}</Operation>
       </PreviousOperandBox>
       <CurrentOperand>{formatOperand(currentOperand)}</CurrentOperand>
+      <Line />
     </DisplayBox>
   );
 };

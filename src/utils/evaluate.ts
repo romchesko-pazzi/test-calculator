@@ -1,10 +1,10 @@
 import { calculationAccuracy } from 'constants/common';
-import { OperationType } from 'types/operationTypes';
+import { Operations } from 'constants/operations';
 
 export const evaluateFunc = (
   prev: string | null,
   curr: string | null,
-  operation: OperationType | null,
+  operation: Operations | null,
 ): string | null => {
   if (!prev || !curr) return null;
   const previous = parseFloat(prev);
@@ -12,16 +12,16 @@ export const evaluateFunc = (
   let result = 0;
 
   switch (operation) {
-    case '+':
+    case Operations.plus:
       result = previous + current;
       break;
-    case '-':
+    case Operations.minus:
       result = previous - current;
       break;
-    case '*':
+    case Operations.multiply:
       result = previous * current;
       break;
-    case '/':
+    case Operations.divide:
       result = previous / current;
       break;
     default:

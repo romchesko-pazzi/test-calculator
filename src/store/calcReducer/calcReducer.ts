@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 
-import { OperationType } from 'types/operationTypes';
+import { Operations } from 'constants/operations';
 import { evaluateFunc } from 'utils/evaluate';
 
 const initialState: IInitState = {
@@ -31,7 +31,7 @@ const slice = createSlice({
       if (!state.currentOperand) return state;
       state.currentOperand = null;
     },
-    chooseOperation: (state, action: PayloadAction<OperationType>) => {
+    chooseOperation: (state, action: PayloadAction<Operations>) => {
       if (!state.currentOperand && !state.previousOperand) return state;
       if (!state.currentOperand) {
         state.operation = action.payload;
@@ -46,8 +46,8 @@ const slice = createSlice({
         return;
       }
       state.previousOperand = evaluateFunc(
-        state.previousOperand,
         state.currentOperand,
+        state.previousOperand,
         state.operation,
       );
       state.operation = action.payload;
@@ -84,17 +84,26 @@ const slice = createSlice({
       state.operation = null;
       state.previousOperand = null;
     },
+    clearHistory: state => {
+      state.savedData = [];
+    },
   },
 });
 
 export const calcReducer = slice.reducer;
-export const { addDigit, deleteOperand, chooseOperation, clearAll, evaluate } =
-  slice.actions;
+export const {
+  addDigit,
+  deleteOperand,
+  chooseOperation,
+  clearAll,
+  evaluate,
+  clearHistory,
+} = slice.actions;
 
 interface IBase {
   currentOperand: null | string;
   previousOperand: null | string;
-  operation: null | OperationType;
+  operation: null | Operations;
 }
 
 interface IInitState extends IBase {

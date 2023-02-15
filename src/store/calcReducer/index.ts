@@ -1,7 +1,19 @@
-export {
+import {
   addDigit,
   deleteOperand,
   chooseOperation,
   clearAll,
-  calcReducer,
+  clearHistory,
+  evaluate,
 } from './calcReducer';
+
+export const calcActions = {
+  addDigit,
+  deleteOperand,
+  chooseOperation,
+  clearAll,
+  clearHistory,
+  evaluate,
+};
+
+export { calcReducer } from './calcReducer';
