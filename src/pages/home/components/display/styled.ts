@@ -27,7 +27,7 @@ export const PreviousOperand = styled.div`
 export const Operation = styled.div``;
 
 export const CurrentOperand = styled.div`
-  color: #000000;
+  color: ${props => props.theme.colors.fontColor};
   font-size: 3rem;
   min-height: 3.5rem;
   margin-bottom: 1rem;

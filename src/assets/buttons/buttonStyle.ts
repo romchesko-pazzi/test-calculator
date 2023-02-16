@@ -6,4 +6,5 @@ export const Button = styled.button`
   min-height: 6rem;
   font-size: 2.3rem;
   background: orange;
+  color: ${props => props.theme.colors.fontColor};
 `;

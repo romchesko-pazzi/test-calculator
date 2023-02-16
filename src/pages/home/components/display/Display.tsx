@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useAppSelector } from 'hooks/useSelector';
 import {
   CurrentOperand,
   DisplayBox,
@@ -7,9 +8,7 @@ import {
   PreviousOperand,
   PreviousOperandBox,
   Line,
-} from './displayStyles';
-
-import { useAppSelector } from 'hooks/useSelector';
+} from 'pages/home/components/display/styled';
 import { formatOperand } from 'utils/formatOperand';
 
 export const Display = () => {

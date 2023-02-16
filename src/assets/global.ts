@@ -16,7 +16,8 @@ export const Global = createGlobalStyle`
   body {
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
-    background-color: #F9F9FA;
+    background-color: ${props => props.theme.colors.backgroundColor};
+    color: ${props => props.theme.colors.fontColor};
   }
 
   a {
