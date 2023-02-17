@@ -8,10 +8,10 @@ export const HistoryComponent = () => {
   const savedData = useAppSelector(state => state.calc.savedData);
 
   return (
-    <History>
+    <History data-cy="history">
       <Title>History</Title>
       {savedData.map(item => (
-        <Element key={item.id}>
+        <Element data-cy="historyElement" key={item.id}>
           {`${item.previousOperand} `}
           {`${item.operation} `}
           {`${item.currentOperand} `}

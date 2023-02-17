@@ -19,10 +19,14 @@ export const Display = () => {
   return (
     <DisplayBox>
       <PreviousOperandBox>
-        <PreviousOperand>{formatOperand(previousOperand)}</PreviousOperand>
+        <PreviousOperand data-cy="prevOperand">
+          {formatOperand(previousOperand)}
+        </PreviousOperand>
         <Operation>{operation}</Operation>
       </PreviousOperandBox>
-      <CurrentOperand>{formatOperand(currentOperand)}</CurrentOperand>
+      <CurrentOperand data-cy="currOperand">
+        {formatOperand(currentOperand)}
+      </CurrentOperand>
       <Line />
     </DisplayBox>
   );

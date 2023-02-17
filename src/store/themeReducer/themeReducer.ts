@@ -10,14 +10,17 @@ const slice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    changeTheme: state => {
-      state.theme = state.theme === ThemeEnum.light ? ThemeEnum.dark : ThemeEnum.light;
+    changeToLight: state => {
+      state.theme = ThemeEnum.light;
+    },
+    changeToDark: state => {
+      state.theme = ThemeEnum.dark;
     },
   },
 });
 
 export const themeReducer = slice.reducer;
-export const { changeTheme } = slice.actions;
+export const { changeToDark, changeToLight } = slice.actions;
 
 interface IInitState {
   theme: ThemeEnum;

@@ -1,7 +1,8 @@
-import { changeTheme } from './themeReducer';
+import { changeToDark, changeToLight } from './themeReducer';
 
 export const themeActions = {
-  changeTheme,
+  changeToDark,
+  changeToLight,
 };
 
 export { themeReducer } from './themeReducer';

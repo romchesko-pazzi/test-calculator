@@ -182,7 +182,7 @@
         ],
         "camelcase": "off",
         "import/no-extraneous-dependencies": [
-            "error",
+            "off",
             {
                 "devDependencies": true,
                 "peerDependencies": true
@@ -191,6 +191,7 @@
     },
     "settings": {
         "import/resolver": {
+            "typescript": {},
             "node": {
                 "paths": [
                     "src"

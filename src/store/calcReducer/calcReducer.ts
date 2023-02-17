@@ -23,7 +23,7 @@ const slice = createSlice({
 
         return;
       }
-      if (action.payload === '0' && state.currentOperand === '0') return state;
+      // if (action.payload === '0' && state.currentOperand === '0') return state;
       if (action.payload === '.' && state.currentOperand?.includes('.')) return state;
       state.currentOperand = `${state.currentOperand || ''}${action.payload}`;
     },
