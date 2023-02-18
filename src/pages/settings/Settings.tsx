@@ -51,7 +51,9 @@ export const Settings = () => {
             <Option onClick={changeToDarkHandler}>{ThemeEnum.dark}</Option>
           </Options>
         </DropDownWrapper>
-        <RemoveButton onClick={() => clearHistory()}>Clear all history</RemoveButton>
+        <RemoveButton data-cy="removeBtn" onClick={() => clearHistory()}>
+          Clear all history
+        </RemoveButton>
       </ButtonsBox>
     </SettingsWrapper>
   );

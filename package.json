@@ -28,6 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress": "cypress open",
+    "cypressAll": "cypress run --browser=firefox",
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },

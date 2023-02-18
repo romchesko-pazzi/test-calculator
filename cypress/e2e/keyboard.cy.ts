@@ -22,14 +22,13 @@ describe('Keyboard-Display module', () => {
       cy.get('[data-cy = "prevOperand"]').should('be.empty');
     });
   });
-  context('suka', () => {
+
+  it("shouldn't contain two zero", () => {
+    cy.visit('/');
     const firstOperand = '0';
 
-    it("shouldn't contains two zero", () => {
-      cy.visit('/');
-      cy.contains(firstOperand).click();
-      cy.contains(firstOperand).click();
-      cy.get('[data-cy = "currOperand"]').should('have.length', 1);
-    });
+    cy.get('button').contains(firstOperand).click();
+    cy.get('button').contains(firstOperand).click();
+    cy.get('[data-cy = "currOperand"]').should('have.text', firstOperand);
   });
 });
