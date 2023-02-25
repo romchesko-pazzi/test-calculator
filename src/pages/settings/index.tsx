@@ -28,13 +28,11 @@ export const Settings = () => {
   const toggling = () => setIsOpen(!isOpen);
   const onBlurHandler = () => setIsOpen(false);
   const changeToLightHandler = () => {
-    localStorage.setItem('theme', ThemeEnum.light);
     changeToLight();
     setIsOpen(false);
   };
 
   const changeToDarkHandler = () => {
-    localStorage.setItem('theme', ThemeEnum.dark);
     changeToDark();
     setIsOpen(false);
   };

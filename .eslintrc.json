@@ -67,6 +67,7 @@
         "jsx-a11y/no-autofocus": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/no-static-element-interactions": "off",
+        "no-eval": "off",
         "default-param-last": "off",
         "import/order": [
             "error",
@@ -129,6 +130,8 @@
             }
         ],
         "no-shadow": "off",
+        "no-continue": "off",
+        "no-restricted-syntax": "off",
         "no-debugger": "error",
         "no-unused-vars": "off",
         "no-use-before-define": "off",
@@ -144,6 +147,7 @@
         ],
         "react/display-name": "off",
         "react/react-in-jsx-scope": "off",
+        "react/no-array-index-key": "off",
         "react/require-default-props": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
@@ -169,6 +173,7 @@
                 "html": "ignore"
             }
         ],
+        "react/prefer-stateless-function": "off",
         "@typescript-eslint/no-unused-vars": [
             "warn"
         ],

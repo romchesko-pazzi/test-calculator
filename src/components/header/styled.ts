@@ -17,6 +17,6 @@ export const SwitchBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 15rem;
+  min-width: 30rem;
   font-size: 2rem;
 `;

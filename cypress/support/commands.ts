@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 // ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
+// This example command.ts shows you how to
+// create various custom command and overwrite
+// existing command.
 //
 // For more comprehensive examples of custom
-// commands please read more here:
+// command please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //

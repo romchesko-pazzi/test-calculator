@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useAppSelector } from 'hooks/useSelector';
 import {
   CurrentOperand,
   DisplayBox,
@@ -8,8 +7,8 @@ import {
   PreviousOperand,
   PreviousOperandBox,
   Line,
-} from 'pages/home/components/display/styled';
-import { formatOperand } from 'utils/formatOperand';
+} from 'components/display/styled';
+import { useAppSelector } from 'hooks/useSelector';
 
 export const Display = () => {
   const currentOperand = useAppSelector(state => state.calc.currentOperand);
@@ -19,14 +18,10 @@ export const Display = () => {
   return (
     <DisplayBox>
       <PreviousOperandBox>
-        <PreviousOperand data-cy="prevOperand">
-          {formatOperand(previousOperand)}
-        </PreviousOperand>
+        <PreviousOperand data-cy="prevOperand">{previousOperand}</PreviousOperand>
         <Operation>{operation}</Operation>
       </PreviousOperandBox>
-      <CurrentOperand data-cy="currOperand">
-        {formatOperand(currentOperand)}
-      </CurrentOperand>
+      <CurrentOperand data-cy="currOperand">{currentOperand}</CurrentOperand>
       <Line />
     </DisplayBox>
   );

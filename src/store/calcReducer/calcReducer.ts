@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 
 import { Operations } from 'constants/operations';
-import { evaluateFunc } from 'utils/evaluate';
+import { IInitState } from 'store/interfaces';
+import { calculateExpression } from 'utils/calculateExpressionFunction';
 
 const initialState: IInitState = {
   currentOperand: null,
@@ -10,24 +11,24 @@ const initialState: IInitState = {
   operation: null,
   isOverwrite: false,
   savedData: [],
+  isError: false,
 };
 
 const slice = createSlice({
   name: 'calculator',
   initialState,
   reducers: {
-    addDigit: (state, action: PayloadAction<string>) => {
-      if (state.isOverwrite) {
+    addElement: (state, action: PayloadAction<string>) => {
+      if (state.isOverwrite && action.payload !== '.') {
         state.currentOperand = action.payload;
         state.isOverwrite = false;
 
         return;
       }
-      // if (action.payload === '0' && state.currentOperand === '0') return state;
-      if (action.payload === '.' && state.currentOperand?.includes('.')) return state;
+      if (action.payload === '0' && state.currentOperand === '0') return state;
       state.currentOperand = `${state.currentOperand || ''}${action.payload}`;
     },
-    deleteOperand: state => {
+    removeElement: state => {
       if (!state.currentOperand) return state;
       state.currentOperand = null;
     },
@@ -45,73 +46,60 @@ const slice = createSlice({
 
         return;
       }
-      state.previousOperand = evaluateFunc(
-        state.currentOperand,
-        state.previousOperand,
-        state.operation,
-      );
-      state.operation = action.payload;
-      state.currentOperand = null;
+      slice.caseReducers.addElement(state, { payload: action.payload, type: '' });
     },
-    evaluate: state => {
+    makeCalculations: state => {
       if (!state.operation || !state.currentOperand || !state.previousOperand) {
         return state;
       }
-
       const beforeCalculations = state.currentOperand;
 
-      state.currentOperand = evaluateFunc(
-        state.previousOperand,
-        state.currentOperand,
-        state.operation,
-      );
+      try {
+        state.currentOperand = calculateExpression(
+          `${state.previousOperand}
+        ${state.operation}
+        ${state.currentOperand}`,
+        );
+        // save to history
+        state.savedData.unshift({
+          id: v4(),
+          previousOperand: state.previousOperand,
+          currentOperand: beforeCalculations,
+          result: state.currentOperand,
+          operation: state.operation,
+        });
 
-      // save to history
-      state.savedData.unshift({
-        id: v4(),
-        previousOperand: state.previousOperand,
-        currentOperand: beforeCalculations,
-        result: state.currentOperand,
-        operation: state.operation,
-      });
+        state.operation = null;
+        state.previousOperand = null;
+        state.isOverwrite = true;
+      } catch (e: unknown) {
+        const error = e as SyntaxError;
 
-      state.operation = null;
-      state.previousOperand = null;
-      state.isOverwrite = true;
+        state.isError = true;
+        state.previousOperand = null;
+        state.operation = null;
+        state.currentOperand = error.message;
+      }
     },
     clearAll: state => {
+      state.isError = false;
       state.currentOperand = null;
       state.operation = null;
       state.previousOperand = null;
     },
     clearHistory: state => {
       state.savedData = [];
+      localStorage.clear();
     },
   },
 });
 
 export const calcReducer = slice.reducer;
 export const {
-  addDigit,
-  deleteOperand,
+  addElement,
+  removeElement,
   chooseOperation,
   clearAll,
-  evaluate,
   clearHistory,
+  makeCalculations,
 } = slice.actions;
-
-interface IBase {
-  currentOperand: null | string;
-  previousOperand: null | string;
-  operation: null | Operations;
-}
-
-interface IInitState extends IBase {
-  isOverwrite: boolean;
-  savedData: IOperationData[];
-}
-
-interface IOperationData extends IBase {
-  id: string;
-  result: string | null;
-}

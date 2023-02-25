@@ -9,6 +9,7 @@ import { darkTheme, lightTheme } from 'assets/theme';
 import { Header } from 'components/header';
 import { useAppSelector } from 'hooks/useSelector';
 import { Home } from 'pages/home';
+import { HomeCC } from 'pages/homeCC';
 import { Settings } from 'pages/settings';
 
 export const App = () => {
@@ -20,6 +21,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
+          <Route path="/CC" element={<HomeCC />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

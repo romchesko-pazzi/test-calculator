@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Element, History, Title, BorderLeft } from './styled';
-
+import { Element, History, Title, BorderLeft } from 'components/history/styled';
 import { useAppSelector } from 'hooks/useSelector';
 
 export const HistoryComponent = () => {
@@ -12,10 +11,10 @@ export const HistoryComponent = () => {
       <Title>History</Title>
       {savedData.map(item => (
         <Element data-cy="historyElement" key={item.id}>
-          {`${item.previousOperand} `}
-          {`${item.operation} `}
-          {`${item.currentOperand} `}
-          {`= ${item.result}`}
+          {`${item.previousOperand}`}
+          {`${item.operation}`}
+          {`${item.currentOperand}`}
+          {` = ${item.result}`}
         </Element>
       ))}
       <BorderLeft />

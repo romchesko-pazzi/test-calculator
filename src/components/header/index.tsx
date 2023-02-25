@@ -19,7 +19,10 @@ export const Header = () => {
         <Title>Calculator App</Title>
         <SwitchBlock>
           <NavLink to="/" style={isStyleActive}>
-            Home
+            HomeFC
+          </NavLink>
+          <NavLink to="/CC" style={isStyleActive}>
+            HomeCC
           </NavLink>
           <NavLink to="settings" style={isStyleActive}>
             Settings

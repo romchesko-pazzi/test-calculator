@@ -1,19 +1,19 @@
 import {
-  addDigit,
-  deleteOperand,
+  addElement,
+  removeElement,
   chooseOperation,
   clearAll,
   clearHistory,
-  evaluate,
+  makeCalculations,
 } from './calcReducer';
 
 export const calcActions = {
-  addDigit,
-  deleteOperand,
+  addElement,
+  removeElement,
   chooseOperation,
   clearAll,
   clearHistory,
-  evaluate,
+  makeCalculations,
 };
 
 export { calcReducer } from './calcReducer';

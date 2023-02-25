@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HomeWrapper = styled.div`
+export const CalculatorWrapper = styled.div`
   min-height: 90vh;
   display: flex;
 `;

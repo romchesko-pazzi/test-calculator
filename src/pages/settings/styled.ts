@@ -43,7 +43,7 @@ export const Value = styled.span`
 export const Caret = styled.div`
   translate: 0 25%;
   border: 0.6rem solid transparent;
-  border-top-color: ${props => props.theme.colors.backgroundColor};
+  border-top-color: ${props => props.theme.colors.primary};
 `;
 
 export const Options = styled.ul<{ display: string }>`
