@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BorderLeft, Element, History, Title } from 'components/history/styled';
+import { BorderLeft, Element, HistoryBox, Title } from 'components/history/styled';
 import { ILocalStorageData } from 'store/interfaces';
 import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
 
@@ -40,7 +40,7 @@ export class HistoryComponentCC extends React.Component<{}, IHistory> {
     const { operationsHistory } = this.state;
 
     return (
-      <History data-cy="history">
+      <HistoryBox data-cy="history">
         <Title>History</Title>
         {operationsHistory.map(({ expression, id }) => (
           <Element data-cy="historyElement" key={id}>
@@ -48,7 +48,7 @@ export class HistoryComponentCC extends React.Component<{}, IHistory> {
           </Element>
         ))}
         <BorderLeft />
-      </History>
+      </HistoryBox>
     );
   }
 }

@@ -14,26 +14,24 @@ import {
 
 import { ThemeEnum } from 'assets/interfaces/styled';
 import { useActions } from 'hooks/useActions';
-import { useAppSelector } from 'hooks/useSelector';
 import { calcActions } from 'store/calcReducer';
-import { themeActions } from 'store/themeReducer';
 
-export const Settings = () => {
+export const Settings = ({ theme, setTheme }: ISettings) => {
   const { clearHistory } = useActions(calcActions);
-  const { changeToDark, changeToLight } = useActions(themeActions);
 
   const [isOpen, setIsOpen] = useState(false);
-  const currentTheme = useAppSelector(state => state.theme.theme);
 
   const toggling = () => setIsOpen(!isOpen);
   const onBlurHandler = () => setIsOpen(false);
+
   const changeToLightHandler = () => {
-    changeToLight();
+    localStorage.setItem('storedTheme', ThemeEnum.light);
+    setTheme(ThemeEnum.light);
     setIsOpen(false);
   };
-
   const changeToDarkHandler = () => {
-    changeToDark();
+    localStorage.setItem('storedTheme', ThemeEnum.dark);
+    setTheme(ThemeEnum.dark);
     setIsOpen(false);
   };
 
@@ -42,7 +40,7 @@ export const Settings = () => {
       <Title>Settings</Title>
       <ButtonsBox>
         <DropDownWrapper onBlur={onBlurHandler} tabIndex={0}>
-          <Value onClick={toggling}>{currentTheme}</Value>
+          <Value onClick={toggling}>{theme}</Value>
           <Caret onClick={toggling} />
           <Options display={isOpen ? 'block' : 'none'}>
             <Option onClick={changeToLightHandler}>{ThemeEnum.light}</Option>
@@ -56,3 +54,8 @@ export const Settings = () => {
     </SettingsWrapper>
   );
 };
+
+interface ISettings {
+  theme: ThemeEnum;
+  setTheme: (arg: ThemeEnum) => void;
+}

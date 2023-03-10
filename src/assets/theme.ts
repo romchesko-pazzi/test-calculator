@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 import { ITheme, ThemeEnum } from 'assets/interfaces/styled';
 
-export const baseTheme: ITheme = {
+const baseTheme: ITheme = {
   colors: {
     primary: '#ffa500',
 

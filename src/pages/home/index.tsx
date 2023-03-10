@@ -5,7 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { HomeWrapper, MainCalculateBlock } from './styled';
 
 import { Display } from 'components/display';
-import { HistoryComponent } from 'components/history';
+import { History } from 'components/history';
 import { Keyboard } from 'components/keyboard';
 import { ErrorFallback } from 'utils/errorBoundary/errorFallback';
 
@@ -17,7 +17,7 @@ export const Home = () => {
           <Display />
           <Keyboard />
         </MainCalculateBlock>
-        <HistoryComponent />
+        <History />
       </ErrorBoundary>
     </HomeWrapper>
   );
