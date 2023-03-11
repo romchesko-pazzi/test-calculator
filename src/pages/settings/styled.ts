@@ -43,7 +43,7 @@ export const Value = styled.span`
 export const Caret = styled.div`
   translate: 0 25%;
   border: 0.6rem solid transparent;
-  border-top-color: ${props => props.theme.colors.primary};
+  border-top-color: ${props => props.theme.colors.headerBackground};
 `;
 
 export const Options = styled.ul<{ display: string }>`
@@ -66,16 +66,16 @@ export const Option = styled.li`
   cursor: pointer;
 
   &:hover {
-    color: ${props => props.theme.colors.fontColor};
-    background: ${props => props.theme.colors.primary};
+    color: #ffffff;
+    background: ${props => props.theme.colors.headerBackground};
   }
 `;
 
 export const RemoveButton = styled.div`
   max-width: fit-content;
   padding: 1rem;
-  background: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.colors.selectFontColor};
+  background: ${props => props.theme.colors.headerBackground};
+  color: #ffffff;
   border-radius: 0.5rem;
   cursor: pointer;
 `;

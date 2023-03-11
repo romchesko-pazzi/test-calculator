@@ -1,10 +1,13 @@
 export interface ITheme {
   colors: {
-    primary: string;
     fontColor: string;
     backgroundColor: string;
     selectBackground: string;
     selectFontColor: string;
+    headerBackground: string;
+    buttonBackground: string;
+    borderButtonColor: string;
+    unActiveLinkColor: string;
   };
 }
 

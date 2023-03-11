@@ -25,7 +25,7 @@ export const Global = createGlobalStyle`
 
     &:visited,
     &:active {
-      color: #a4a4a4;
+      color: ${props => props.theme.colors.unActiveLinkColor};
     }
   }
 

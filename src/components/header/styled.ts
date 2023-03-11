@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
-  background-color: #383838;
+  background-color: ${props => props.theme.colors.headerBackground};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: #ffffff;
   padding: 2rem;
 `;
 

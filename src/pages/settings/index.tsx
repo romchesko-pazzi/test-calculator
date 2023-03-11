@@ -19,7 +19,6 @@ export const Settings = ({ theme, setTheme }: ISettings) => {
 
   const toggling = () => setIsOpen(!isOpen);
   const onBlurHandler = () => setIsOpen(false);
-
   const clearHistory = () => localStorage.clear();
 
   const changeToLightHandler = () => {
@@ -37,9 +36,9 @@ export const Settings = ({ theme, setTheme }: ISettings) => {
     <SettingsWrapper>
       <Title>Settings</Title>
       <ButtonsBox>
-        <DropDownWrapper onBlur={onBlurHandler} tabIndex={0}>
-          <Value onClick={toggling}>{theme}</Value>
-          <Caret onClick={toggling} />
+        <DropDownWrapper onClick={toggling} onBlur={onBlurHandler} tabIndex={0}>
+          <Value>{theme}</Value>
+          <Caret />
           <Options display={isOpen ? 'block' : 'none'}>
             <Option onClick={changeToLightHandler}>{ThemeEnum.light}</Option>
             <Option onClick={changeToDarkHandler}>{ThemeEnum.dark}</Option>

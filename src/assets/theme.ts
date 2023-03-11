@@ -4,12 +4,14 @@ import { ITheme, ThemeEnum } from 'assets/interfaces/styled';
 
 const baseTheme: ITheme = {
   colors: {
-    primary: '#ffa500',
-
     fontColor: '#19191B',
     backgroundColor: '#E5E4E8',
     selectBackground: '#ffffff',
     selectFontColor: '#19191B',
+    headerBackground: '#383838',
+    buttonBackground: '#ffffff',
+    borderButtonColor: '#c9c9c9',
+    unActiveLinkColor: '#cec7bd',
   },
 };
 
@@ -25,7 +27,11 @@ export const darkTheme: DefaultTheme = {
   colors: {
     ...baseTheme.colors,
     fontColor: '#ffffff',
-    backgroundColor: '#19191B',
+    backgroundColor: '#323030',
     selectBackground: '#E5E4E8',
+    headerBackground: '#C29545',
+    buttonBackground: '#CDBEA7',
+    borderButtonColor: '#CDBEA7',
+    unActiveLinkColor: '#000000',
   },
 };

@@ -5,7 +5,7 @@ export const DisplayBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
-  min-height: 12.15rem;
+  min-height: 14rem;
 `;
 
 export const Line = styled.div`
@@ -17,18 +17,18 @@ export const Line = styled.div`
 export const PreviousOperandBox = styled.div`
   display: flex;
   color: #737373;
-  font-size: 2rem;
+  font-size: 2.5rem;
 `;
 
 export const PreviousOperand = styled.div`
-  min-height: 2.5rem;
+  min-height: 3rem;
 `;
 
 export const Operation = styled.div``;
 
 export const CurrentOperand = styled.div`
   color: ${props => props.theme.colors.fontColor};
-  font-size: 3rem;
-  min-height: 3.5rem;
+  font-size: 4rem;
+  min-height: 5rem;
   margin-bottom: 1rem;
 `;
