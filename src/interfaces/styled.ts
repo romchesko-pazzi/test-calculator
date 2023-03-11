@@ -11,8 +11,3 @@ export interface ITheme {
     toggleHistoryHovered: string;
   };
 }
-
-export enum ThemeEnum {
-  light = 'Light theme',
-  dark = 'Dark theme',
-}
