@@ -18,11 +18,11 @@ export interface IBaseStore {
 
 export interface IInitState extends IBaseStore {
   isOverwrite: boolean;
-  savedData: IOperationData[];
+  savedData: ISavedData[];
   isError: boolean;
 }
 
-export interface IOperationData extends IBaseStore {
+export interface ISavedData extends IBaseStore {
   id: string;
   result: string | null;
 }
@@ -33,9 +33,6 @@ export interface ILocalStorageData {
   result: string;
 }
 
-export interface IForClassComponent {
-  currentOperand: null | string;
-  previousOperand: null | string;
-  operation: null | Operations;
+export interface IClassState extends IBaseStore {
   isOverwrite: boolean;
 }

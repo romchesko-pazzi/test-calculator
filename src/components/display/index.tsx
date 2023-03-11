@@ -11,9 +11,9 @@ import {
 import { useAppSelector } from 'hooks/useSelector';
 
 export const Display = () => {
-  const currentOperand = useAppSelector(state => state.calc.currentOperand);
-  const previousOperand = useAppSelector(state => state.calc.previousOperand);
-  const operation = useAppSelector(state => state.calc.operation);
+  const currentOperand = useAppSelector(state => state.calculator.currentOperand);
+  const previousOperand = useAppSelector(state => state.calculator.previousOperand);
+  const operation = useAppSelector(state => state.calculator.operation);
 
   return (
     <DisplayBox>

@@ -4,12 +4,12 @@ import { Button } from 'assets/buttons/buttonStyle';
 import { Operations } from 'constants/operations';
 import { useActions } from 'hooks/useActions';
 import { useAppSelector } from 'hooks/useSelector';
-import { calcActions } from 'store/calcReducer';
+import { calculatorActions } from 'store/calculatorReducer';
 
 export const OperationButton = ({ operationType, isCancelBtn }: IOperationButton) => {
   const { clearAll, chooseOperation, makeCalculations, removeElement } =
-    useActions(calcActions);
-  const isError = useAppSelector(state => state.calc.isError);
+    useActions(calculatorActions);
+  const isError = useAppSelector(state => state.calculator.isError);
   const clickHandler = () => {
     if (operationType === Operations.removeAll) {
       clearAll();

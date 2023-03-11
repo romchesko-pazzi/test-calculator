@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 
+import { getDataFromLocalStorage } from '../../utils/getDataFromLocalStorage';
+
 import { Operations } from 'constants/operations';
-import { IInitState } from 'store/interfaces';
+import { IInitState, ISavedData } from 'store/interfaces';
 import { calculateExpression } from 'utils/calculateExpressionFunction';
 
 const initialState: IInitState = {
@@ -60,14 +62,24 @@ const slice = createSlice({
         ${state.operation}
         ${state.currentOperand}`,
         );
+
         // save to history
-        state.savedData.unshift({
+        const obj = {
           id: v4(),
           previousOperand: state.previousOperand,
           currentOperand: beforeCalculations,
           result: state.currentOperand,
           operation: state.operation,
-        });
+        };
+
+        state.savedData.unshift(obj);
+        const storedOperations = getDataFromLocalStorage('operationsHistoryFunction');
+
+        storedOperations.unshift(obj);
+        localStorage.setItem(
+          'operationsHistoryFunction',
+          JSON.stringify(storedOperations),
+        );
 
         state.operation = null;
         state.previousOperand = null;
@@ -87,19 +99,22 @@ const slice = createSlice({
       state.operation = null;
       state.previousOperand = null;
     },
-    clearHistory: state => {
+    saveToStore: (state, action: PayloadAction<ISavedData[]>) => {
+      state.savedData.unshift(...action.payload);
+    },
+    clearOperationsStore: state => {
       state.savedData = [];
-      localStorage.clear();
     },
   },
 });
 
-export const calcReducer = slice.reducer;
+export const calculatorReducer = slice.reducer;
 export const {
   addElement,
   removeElement,
   chooseOperation,
   clearAll,
-  clearHistory,
   makeCalculations,
+  saveToStore,
+  clearOperationsStore,
 } = slice.actions;

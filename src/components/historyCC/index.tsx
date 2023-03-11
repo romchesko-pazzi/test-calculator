@@ -18,16 +18,16 @@ export class HistoryComponentCC extends React.Component<{}, IHistory> {
 
   componentDidMount() {
     const { operationsHistory } = this.state;
-    const dataFromLocalStorage = getDataFromLocalStorage();
+    const dataFromLocalStorage = getDataFromLocalStorage('operationsHistoryClass');
 
     this.setState({
-      operationsHistory: [...operationsHistory, ...(dataFromLocalStorage as any)],
+      operationsHistory: [...operationsHistory, ...dataFromLocalStorage],
     });
   }
 
   componentDidUpdate() {
     const { operationsHistory } = this.state;
-    const dataFromLocalStorage = getDataFromLocalStorage();
+    const dataFromLocalStorage = getDataFromLocalStorage('operationsHistoryClass');
 
     if (operationsHistory.length !== dataFromLocalStorage.length) {
       this.setState({

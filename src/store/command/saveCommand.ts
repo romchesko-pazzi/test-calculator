@@ -22,9 +22,9 @@ export class SaveCommand implements ICommand {
   }
 
   execute() {
-    const parsed = getDataFromLocalStorage();
+    const parsed = getDataFromLocalStorage('operationsHistoryClass');
 
     parsed.unshift(this.state);
-    localStorage.setItem('operationsHistory', JSON.stringify(parsed));
+    localStorage.setItem('operationsHistoryClass', JSON.stringify(parsed));
   }
 }

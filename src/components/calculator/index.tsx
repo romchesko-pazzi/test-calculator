@@ -12,9 +12,9 @@ import { CalculateCommand } from 'store/command/calculateCommand';
 import { globalState } from 'store/command/globalState';
 import { Invoker } from 'store/command/invoker';
 import { SaveCommand } from 'store/command/saveCommand';
-import { IForClassComponent } from 'store/interfaces';
+import { IClassState } from 'store/interfaces';
 
-export class Calculator extends React.Component<{}, IForClassComponent> {
+export class Calculator extends React.Component<{}, IClassState> {
   constructor(props: {}) {
     super(props);
     this.state = {

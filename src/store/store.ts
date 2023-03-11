@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
-import { calcReducer } from './calcReducer';
+import { calculatorReducer } from './calculatorReducer';
 
 const rootReducer = combineReducers({
-  calc: calcReducer,
+  calculator: calculatorReducer,
 });
 
 export const store = configureStore({

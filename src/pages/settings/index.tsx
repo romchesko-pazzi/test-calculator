@@ -13,16 +13,14 @@ import {
 } from './styled';
 
 import { ThemeEnum } from 'assets/interfaces/styled';
-import { useActions } from 'hooks/useActions';
-import { calcActions } from 'store/calcReducer';
 
 export const Settings = ({ theme, setTheme }: ISettings) => {
-  const { clearHistory } = useActions(calcActions);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const toggling = () => setIsOpen(!isOpen);
   const onBlurHandler = () => setIsOpen(false);
+
+  const clearHistory = () => localStorage.clear();
 
   const changeToLightHandler = () => {
     localStorage.setItem('storedTheme', ThemeEnum.light);
@@ -47,7 +45,7 @@ export const Settings = ({ theme, setTheme }: ISettings) => {
             <Option onClick={changeToDarkHandler}>{ThemeEnum.dark}</Option>
           </Options>
         </DropDownWrapper>
-        <RemoveButton data-cy="removeBtn" onClick={() => clearHistory()}>
+        <RemoveButton data-cy="removeBtn" onClick={clearHistory}>
           Clear all history
         </RemoveButton>
       </ButtonsBox>
