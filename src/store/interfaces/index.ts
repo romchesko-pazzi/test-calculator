@@ -35,4 +35,5 @@ export interface ILocalStorageData {
 
 export interface IClassState extends IBaseStore {
   isOverwrite: boolean;
+  isHistoryShowed: boolean;
 }

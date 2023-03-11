@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { CalculatorWrapper, MainCalculateBlock } from 'components/calculator/styled';
+import {
+  BorderRight,
+  HomeWrapper,
+  MainCalculateBlock,
+  ToggleHistory,
+} from '../../pages/home/styled';
+
 import { DigitButtonCC } from 'components/digitButtonCC';
 import { DisplayCC } from 'components/displayCC';
 import { HistoryComponentCC } from 'components/historyCC';
@@ -22,6 +28,7 @@ export class Calculator extends React.Component<{}, IClassState> {
       previousOperand: null,
       operation: null,
       isOverwrite: false,
+      isHistoryShowed: true,
     };
   }
 
@@ -109,11 +116,19 @@ export class Calculator extends React.Component<{}, IClassState> {
     });
   };
 
+  setIsHistoryShowed = () => {
+    const { isHistoryShowed } = this.state;
+
+    this.setState({
+      isHistoryShowed: !isHistoryShowed,
+    });
+  };
+
   render() {
-    const { currentOperand, previousOperand, operation } = this.state;
+    const { currentOperand, previousOperand, operation, isHistoryShowed } = this.state;
 
     return (
-      <CalculatorWrapper>
+      <HomeWrapper>
         <MainCalculateBlock>
           <DisplayCC
             currentOperand={currentOperand}
@@ -148,9 +163,14 @@ export class Calculator extends React.Component<{}, IClassState> {
               }
             })}
           </KeyboardBox>
+          <BorderRight />
+          <ToggleHistory
+            onClick={this.setIsHistoryShowed}
+            isHistoryShowed={isHistoryShowed}
+          />
         </MainCalculateBlock>
-        <HistoryComponentCC />
-      </CalculatorWrapper>
+        {isHistoryShowed && <HistoryComponentCC />}
+      </HomeWrapper>
     );
   }
 }

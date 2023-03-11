@@ -8,6 +8,7 @@ export interface ITheme {
     buttonBackground: string;
     borderButtonColor: string;
     unActiveLinkColor: string;
+    toggleHistoryHovered: string;
   };
 }
 

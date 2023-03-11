@@ -17,10 +17,3 @@ export const Element = styled.div`
   text-align: center;
   margin: 2rem 0 2rem 0;
 `;
-
-export const BorderLeft = styled.div`
-  border-left: 0.13rem solid #a1a1a1;
-  position: absolute;
-  top: 2rem;
-  bottom: 2rem;
-`;

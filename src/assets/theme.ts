@@ -12,6 +12,7 @@ const baseTheme: ITheme = {
     buttonBackground: '#ffffff',
     borderButtonColor: '#c9c9c9',
     unActiveLinkColor: '#cec7bd',
+    toggleHistoryHovered: '#c9c9c9',
   },
 };
 
@@ -33,5 +34,6 @@ export const darkTheme: DefaultTheme = {
     buttonBackground: '#CDBEA7',
     borderButtonColor: '#CDBEA7',
     unActiveLinkColor: '#000000',
+    toggleHistoryHovered: '#ffa500',
   },
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BorderLeft, Element, HistoryBox, Title } from 'components/history/styled';
+import { Element, HistoryBox, Title } from 'components/history/styled';
 import { ILocalStorageData } from 'store/interfaces';
 import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
 
@@ -47,7 +47,6 @@ export class HistoryComponentCC extends React.Component<{}, IHistory> {
             {expression}
           </Element>
         ))}
-        <BorderLeft />
       </HistoryBox>
     );
   }
