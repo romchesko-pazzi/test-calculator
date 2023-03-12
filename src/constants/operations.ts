@@ -6,4 +6,5 @@ export enum Operations {
   equals = '=',
   removeAll = 'C',
   removeElement = 'CE',
+  remainderOfDivision = '%',
 }

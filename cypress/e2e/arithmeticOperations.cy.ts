@@ -106,4 +106,23 @@ describe('Arithmetic operations', () => {
     });
     cy.get('[data-cy = "currOperand"]').should('have.text', 'Cannot divide by zero');
   });
+
+  it('should show the remainder of the division correctly', () => {
+    cy.contains('5').click();
+    cy.contains(Operations.plus).click();
+    cy.contains('4').click();
+    cy.contains(Operations.multiply).click();
+    cy.contains(Brackets.leftBracket).click();
+    cy.contains('8').click();
+    cy.contains(Operations.remainderOfDivision).click();
+    cy.contains('3').click();
+    cy.contains(Brackets.rightBracket).click();
+    cy.contains('=').click();
+    cy.get('[data-cy = "prevOperand"]').should('be.empty');
+    cy.get('[data-cy = "currOperand"]').should(() => {
+      const res = calculateExpression('5+4*(8%3)');
+
+      expect(res).to.equal('13');
+    });
+  });
 });

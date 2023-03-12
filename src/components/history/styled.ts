@@ -3,6 +3,8 @@ import styled from 'styled-components';
 export const HistoryBox = styled.div`
   flex: 1;
   position: relative;
+  overflow-y: scroll;
+  max-height: 90vh;
 `;
 
 export const Title = styled.h3`

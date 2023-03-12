@@ -13,6 +13,13 @@ const operators: any = {
 
     return a / b;
   },
+  '%': (a: number, b: number) => {
+    if (b === 0) {
+      throw new SyntaxError('Cannot divide by zero');
+    }
+
+    return a % b;
+  },
 };
 
 const calculateRPN = (expression: string) => {
@@ -46,15 +53,16 @@ const infixToRPN = (expression: string) => {
     '-': 1,
     '*': 2,
     '/': 2,
+    '%': 2,
   };
 
-  const tokens = expression.split(/([-+*/()])/);
+  const tokens = expression.split(/([-+*/%()])/);
 
   for (const token of tokens) {
     if (/\s+/.test(token)) {
       continue;
     }
-    if (/[-+*/]/.test(token)) {
+    if (/[-+*/%]/.test(token)) {
       while (
         stack.length &&
         stack[stack.length - 1] !== '(' &&
@@ -109,6 +117,10 @@ export const calculateExpression = (expression: string) => {
   try {
     const rpnExp = infixToRPN(formattedExp);
     const result = calculateRPN(rpnExp);
+
+    if (Number.isNaN(result)) {
+      throw new SyntaxError('Invalid expression');
+    }
 
     return Number.isInteger(result)
       ? result.toString()

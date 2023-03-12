@@ -22,4 +22,5 @@ export const buttons = [
   { type: 'digit', isCancelBtn: false, digit: '0' },
   { type: 'digit', isCancelBtn: false, digit: Brackets.rightBracket },
   { type: 'operation', isCancelBtn: false, operation: Operations.removeElement },
+  { type: 'operation', isCancelBtn: false, operation: Operations.remainderOfDivision },
 ];
