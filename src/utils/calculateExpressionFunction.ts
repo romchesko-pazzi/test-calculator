@@ -23,25 +23,25 @@ const operators: any = {
 };
 
 const calculateRPN = (expression: string) => {
-  const stack: any = [];
+  const operandsArray: number[] = [];
 
   const tokens = expression.split(/\s+/);
 
   for (const token of tokens) {
     if (operators[token]) {
-      const [b, a] = [stack.pop(), stack.pop()];
+      const [b, a] = [operandsArray.pop(), operandsArray.pop()];
 
-      stack.push(operators[token](a, b));
+      operandsArray.push(operators[token](a, b));
     } else {
-      stack.push(parseFloat(token));
+      operandsArray.push(parseFloat(token));
     }
   }
 
-  if (stack.length !== 1) {
+  if (operandsArray.length !== 1) {
     throw new SyntaxError('Invalid expression');
   }
 
-  return stack.pop();
+  return operandsArray.pop();
 };
 
 const infixToRPN = (expression: string) => {
@@ -118,6 +118,7 @@ export const calculateExpression = (expression: string) => {
     const rpnExp = infixToRPN(formattedExp);
     const result = calculateRPN(rpnExp);
 
+    if (!result) return '';
     if (Number.isNaN(result)) {
       throw new SyntaxError('Invalid expression');
     }

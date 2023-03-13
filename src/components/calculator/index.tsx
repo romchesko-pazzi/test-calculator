@@ -6,13 +6,10 @@ import {
   MainCalculateBlock,
   ToggleHistory,
 } from '../../pages/home/styled';
+import { KeyboardCC } from '../keyboardCC';
 
-import { DigitButtonCC } from 'components/digitButtonCC';
 import { DisplayCC } from 'components/displayCC';
 import { HistoryComponentCC } from 'components/historyCC';
-import { KeyboardBox } from 'components/keyboard/styled';
-import { OperationButtonCC } from 'components/operationButtonCC';
-import { buttons } from 'constants/buttonsArray';
 import { Operations } from 'constants/operations';
 import { CalculateCommand } from 'store/command/calculateCommand';
 import { globalState } from 'store/command/globalState';
@@ -135,34 +132,13 @@ export class Calculator extends React.Component<{}, IClassState> {
             previousOperand={previousOperand}
             operation={operation}
           />
-          <KeyboardBox>
-            {buttons.map(({ type, operation, digit, isCancelBtn }, index) => {
-              switch (type) {
-                case 'operation':
-                  return (
-                    <OperationButtonCC
-                      removeAll={this.removeAll}
-                      removeElement={this.removeElement}
-                      chooseOperation={this.chooseOperation}
-                      makeCalculations={this.makeCalculations}
-                      key={index}
-                      operationType={operation!}
-                      isCancelBtn={isCancelBtn}
-                    />
-                  );
-                case 'digit':
-                  return (
-                    <DigitButtonCC
-                      key={index}
-                      callback={this.addElement}
-                      digit={digit!}
-                    />
-                  );
-                default:
-                  return null;
-              }
-            })}
-          </KeyboardBox>
+          <KeyboardCC
+            makeCalculations={this.makeCalculations}
+            addElement={this.addElement}
+            removeElement={this.removeElement}
+            chooseOperation={this.chooseOperation}
+            removeAll={this.removeAll}
+          />
           <BorderRight />
           <ToggleHistory
             onClick={this.setIsHistoryShowed}

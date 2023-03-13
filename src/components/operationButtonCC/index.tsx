@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { IOperationButton } from '../../interfaces/operations';
+
 import { Button } from 'assets/buttons/buttonStyle';
 import { Operations } from 'constants/operations';
 import { globalState } from 'store/command/globalState';
@@ -41,13 +43,4 @@ export class OperationButtonCC extends React.Component<IOperationButton> {
       </Button>
     );
   }
-}
-
-interface IOperationButton {
-  operationType: Operations;
-  removeAll: () => void;
-  removeElement: () => void;
-  chooseOperation: (operationType: Operations) => void;
-  makeCalculations: (operationType: Operations) => void;
-  isCancelBtn: boolean;
 }
