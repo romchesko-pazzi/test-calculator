@@ -24,8 +24,6 @@ export const PreviousOperand = styled.div`
   min-height: 3rem;
 `;
 
-export const Operation = styled.div``;
-
 export const CurrentOperand = styled.div`
   color: ${props => props.theme.colors.fontColor};
   font-size: 4rem;

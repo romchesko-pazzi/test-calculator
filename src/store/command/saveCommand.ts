@@ -1,23 +1,16 @@
-import { ICommand, IExpression } from '../interfaces';
+import { ICommand } from '../interfaces';
 
 import { GlobalState } from './globalState';
 
-import { Operations } from 'constants/operations';
 import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
 
 export class SaveCommand implements ICommand {
-  private readonly currentOperand: string;
-
-  private readonly previousOperand: string;
-
-  private readonly operation: Operations;
+  private readonly expression: string;
 
   private readonly state: GlobalState;
 
-  constructor(expression: IExpression, state: GlobalState) {
-    this.currentOperand = expression.currentOperand;
-    this.previousOperand = expression.previousOperand;
-    this.operation = expression.operation;
+  constructor(expression: string, state: GlobalState) {
+    this.expression = expression;
     this.state = state;
   }
 

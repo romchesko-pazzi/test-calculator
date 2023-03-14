@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 
-import { getDataFromLocalStorage } from '../../utils/getDataFromLocalStorage';
-
 import { Operations } from 'constants/operations';
-import { IInitState, ISavedData } from 'store/interfaces';
+import { IInitState, ILocalStorageData } from 'store/interfaces';
 import { calculateExpression } from 'utils/calculateExpressionFunction';
+import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
+import { isDotInTheEnd } from 'utils/isDotInTheEnd';
 
 const initialState: IInitState = {
   currentOperand: null,
   previousOperand: null,
-  operation: null,
   isOverwrite: false,
   savedData: [],
   isError: false,
@@ -28,6 +27,8 @@ const slice = createSlice({
         return;
       }
       if (action.payload === '0' && state.currentOperand === '0') return state;
+      if (action.payload === '.' && !state.currentOperand) return;
+      if (action.payload === '.' && state.currentOperand?.includes('.')) return;
       state.currentOperand = `${state.currentOperand || ''}${action.payload}`;
     },
     removeElement: state => {
@@ -36,40 +37,48 @@ const slice = createSlice({
     },
     chooseOperation: (state, action: PayloadAction<Operations>) => {
       if (!state.currentOperand && !state.previousOperand) return state;
-      if (!state.currentOperand) {
-        state.operation = action.payload;
 
-        return;
-      }
-      if (!state.previousOperand) {
-        state.operation = action.payload;
-        state.previousOperand = state.currentOperand;
+      if (state.currentOperand?.at(-1) === '.') {
+        state.previousOperand = `${
+          state.previousOperand || ''
+        }${state.currentOperand.slice(0, -1)}${action.payload}`;
         state.currentOperand = null;
 
         return;
       }
-      slice.caseReducers.addElement(state, { payload: action.payload, type: '' });
+
+      // если нужно сменить математическую операцию
+      if (!state.currentOperand && state.previousOperand) {
+        state.previousOperand = state.previousOperand.slice(0, -1) + action.payload;
+
+        return;
+      }
+
+      if (!state.previousOperand) {
+        state.previousOperand = state.currentOperand + action.payload;
+        state.currentOperand = null;
+
+        return;
+      }
+      state.previousOperand = `${state.previousOperand || ''}${state.currentOperand}${
+        action.payload
+      }`;
+      state.currentOperand = null;
     },
     makeCalculations: state => {
-      if (!state.operation || !state.currentOperand || !state.previousOperand) {
+      if (!state.currentOperand || !state.previousOperand) {
         return state;
       }
-      const beforeCalculations = state.currentOperand;
+      const expression = isDotInTheEnd(state.previousOperand + state.currentOperand);
 
       try {
-        state.currentOperand = calculateExpression(
-          `${state.previousOperand}
-        ${state.operation}
-        ${state.currentOperand}`,
-        );
+        state.currentOperand = calculateExpression(expression);
 
         // save to history
         const obj = {
           id: v4(),
-          previousOperand: state.previousOperand,
-          currentOperand: beforeCalculations,
+          expression,
           result: state.currentOperand,
-          operation: state.operation,
         };
 
         state.savedData.unshift(obj);
@@ -81,7 +90,6 @@ const slice = createSlice({
           JSON.stringify(storedOperations),
         );
 
-        state.operation = null;
         state.previousOperand = null;
         state.isOverwrite = true;
       } catch (e: unknown) {
@@ -89,17 +97,15 @@ const slice = createSlice({
 
         state.isError = true;
         state.previousOperand = null;
-        state.operation = null;
         state.currentOperand = error.message;
       }
     },
     clearAll: state => {
       state.isError = false;
       state.currentOperand = null;
-      state.operation = null;
       state.previousOperand = null;
     },
-    saveToStore: (state, action: PayloadAction<ISavedData[]>) => {
+    saveToStore: (state, action: PayloadAction<ILocalStorageData[]>) => {
       state.savedData.unshift(...action.payload);
     },
     clearOperationsStore: state => {

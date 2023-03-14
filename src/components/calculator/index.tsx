@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {
-  BorderRight,
-  HomeWrapper,
-  MainCalculateBlock,
-  ToggleHistory,
-} from '../../pages/home/styled';
 import { KeyboardCC } from '../keyboardCC';
 
 import { DisplayCC } from 'components/displayCC';
 import { HistoryComponentCC } from 'components/historyCC';
 import { Operations } from 'constants/operations';
+import {
+  BorderRight,
+  HomeWrapper,
+  MainCalculateBlock,
+  ToggleHistory,
+} from 'pages/home/styled';
 import { CalculateCommand } from 'store/command/calculateCommand';
 import { globalState } from 'store/command/globalState';
 import { Invoker } from 'store/command/invoker';
@@ -23,7 +23,6 @@ export class Calculator extends React.Component<{}, IClassState> {
     this.state = {
       currentOperand: null,
       previousOperand: null,
-      operation: null,
       isOverwrite: false,
       isHistoryShowed: true,
     };
@@ -43,6 +42,7 @@ export class Calculator extends React.Component<{}, IClassState> {
 
     if (newValue === '0' && currentOperand === '0') return;
     if (newValue === '.' && !currentOperand) return;
+    if (newValue === '.' && currentOperand?.includes('.')) return;
 
     this.setState({
       currentOperand: `${currentOperand || ''}${newValue}`,
@@ -53,11 +53,22 @@ export class Calculator extends React.Component<{}, IClassState> {
     const { currentOperand, previousOperand } = this.state;
 
     if (!currentOperand && !previousOperand) return;
+    if (currentOperand?.at(-1) === '.') {
+      this.setState({
+        previousOperand: `${previousOperand || ''}${currentOperand.slice(
+          0,
+          -1,
+        )}${operationArg}`,
+        currentOperand: null,
+      });
+
+      return;
+    }
 
     // если нужно сменить математическую операцию
-    if (!currentOperand) {
+    if (!currentOperand && previousOperand) {
       this.setState({
-        operation: operationArg,
+        previousOperand: previousOperand.slice(0, -1) + operationArg,
       });
 
       return;
@@ -65,31 +76,34 @@ export class Calculator extends React.Component<{}, IClassState> {
 
     if (!previousOperand) {
       this.setState({
-        operation: operationArg,
-        previousOperand: currentOperand,
+        previousOperand: currentOperand + operationArg,
         currentOperand: null,
       });
 
       return;
     }
-    this.addElement(operationArg);
+    this.setState({
+      previousOperand: `${previousOperand || ''}${currentOperand}${operationArg}`,
+      currentOperand: null,
+    });
   };
 
   makeCalculations = () => {
-    const { currentOperand, previousOperand, operation } = this.state;
+    const { currentOperand, previousOperand } = this.state;
 
-    if (!operation || !currentOperand || !previousOperand) return;
+    if (!currentOperand || !previousOperand) return;
+
+    const expression = previousOperand + currentOperand;
 
     const invoker = new Invoker(
-      new CalculateCommand({ currentOperand, previousOperand, operation }, globalState),
-      new SaveCommand({ currentOperand, previousOperand, operation }, globalState),
+      new CalculateCommand(expression, globalState),
+      new SaveCommand(expression, globalState),
     );
 
     invoker.executeCommands();
 
     this.setState({
       currentOperand: globalState.result,
-      operation: null,
       previousOperand: null,
       isOverwrite: true,
     });
@@ -99,7 +113,6 @@ export class Calculator extends React.Component<{}, IClassState> {
     this.setState({
       currentOperand: null,
       previousOperand: null,
-      operation: null,
     });
     globalState.isError = false;
   };
@@ -122,16 +135,12 @@ export class Calculator extends React.Component<{}, IClassState> {
   };
 
   render() {
-    const { currentOperand, previousOperand, operation, isHistoryShowed } = this.state;
+    const { currentOperand, previousOperand, isHistoryShowed } = this.state;
 
     return (
       <HomeWrapper>
         <MainCalculateBlock>
-          <DisplayCC
-            currentOperand={currentOperand}
-            previousOperand={previousOperand}
-            operation={operation}
-          />
+          <DisplayCC currentOperand={currentOperand} previousOperand={previousOperand} />
           <KeyboardCC
             makeCalculations={this.makeCalculations}
             addElement={this.addElement}

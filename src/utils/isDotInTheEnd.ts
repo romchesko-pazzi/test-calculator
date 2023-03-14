@@ -1,9 +1,9 @@
 import { dotInTheEnd } from 'constants/regex';
 
-export const isDotInTheEnd = (operand: string) => {
-  if (dotInTheEnd.test(operand)) {
-    return operand.substring(0, operand.length - 1);
+export const isDotInTheEnd = (expression: string) => {
+  if (dotInTheEnd.test(expression)) {
+    return expression.substring(0, expression.length - 1);
   }
 
-  return operand;
+  return expression;
 };

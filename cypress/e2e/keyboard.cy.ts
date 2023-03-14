@@ -14,7 +14,10 @@ describe('Keyboard-Display module', () => {
     it('should remove only one element', () => {
       cy.contains(Operations.removeElement).click();
       cy.get('[data-cy = "currOperand"]').should('be.empty');
-      cy.get('[data-cy = "prevOperand"]').should('have.text', firstOperand);
+      cy.get('[data-cy = "prevOperand"]').should(
+        'have.text',
+        firstOperand + Operations.multiply,
+      );
     });
     it('should remove all elements', () => {
       cy.get('button').contains(Operations.removeAll).click();

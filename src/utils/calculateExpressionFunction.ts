@@ -2,46 +2,39 @@ import { calculationAccuracy } from 'constants/common';
 import { correctBrackets, removeExcess, tooMuchDots } from 'constants/regex';
 import { isValid } from 'utils/isValid';
 
-const operators: any = {
-  '+': (a: number, b: number) => a + b,
-  '-': (a: number, b: number) => a - b,
-  '*': (a: number, b: number) => a * b,
-  '/': (a: number, b: number) => {
-    if (b === 0) {
-      throw new SyntaxError('Cannot divide by zero');
-    }
+export const calculateExpression = (expression: string) => {
+  let formattedExp = expression.replace(removeExcess, '').replace(correctBrackets, ')');
 
-    return a / b;
-  },
-  '%': (a: number, b: number) => {
-    if (b === 0) {
-      throw new SyntaxError('Cannot divide by zero');
-    }
-
-    return a % b;
-  },
-};
-
-const calculateRPN = (expression: string) => {
-  const operandsArray: number[] = [];
-
-  const tokens = expression.split(/\s+/);
-
-  for (const token of tokens) {
-    if (operators[token]) {
-      const [b, a] = [operandsArray.pop(), operandsArray.pop()];
-
-      operandsArray.push(operators[token](a, b));
-    } else {
-      operandsArray.push(parseFloat(token));
-    }
-  }
-
-  if (operandsArray.length !== 1) {
+  if (tooMuchDots.test(formattedExp)) {
     throw new SyntaxError('Invalid expression');
   }
+  isValid(formattedExp);
+  while (/\(/.test(formattedExp)) {
+    const match = formattedExp.match(/\(([^()]+)\)/);
 
-  return operandsArray.pop();
+    if (match) {
+      const result = calculateExpression(match[1]);
+
+      formattedExp = formattedExp.replace(match[0], result);
+    }
+  }
+  try {
+    const rpnExp = infixToRPN(formattedExp);
+    const result = calculateRPN(rpnExp);
+
+    if (!result) return '';
+    if (Number.isNaN(result)) {
+      throw new SyntaxError('Invalid expression');
+    }
+
+    return Number.isInteger(result)
+      ? result.toString()
+      : result.toFixed(calculationAccuracy);
+  } catch (e: unknown) {
+    const error = e as SyntaxError;
+
+    throw new SyntaxError(error.message);
+  }
 };
 
 const infixToRPN = (expression: string) => {
@@ -98,37 +91,44 @@ const infixToRPN = (expression: string) => {
   return output.join(' ');
 };
 
-export const calculateExpression = (expression: string) => {
-  let formattedExp = expression.replace(removeExcess, '').replace(correctBrackets, ')');
+const calculateRPN = (expression: string) => {
+  const operandsArray: number[] = [];
 
-  if (tooMuchDots.test(formattedExp)) {
+  const tokens = expression.split(/\s+/);
+
+  for (const token of tokens) {
+    if (operators[token]) {
+      const [b, a] = [operandsArray.pop(), operandsArray.pop()];
+
+      operandsArray.push(operators[token](a, b));
+    } else {
+      operandsArray.push(parseFloat(token));
+    }
+  }
+
+  if (operandsArray.length !== 1) {
     throw new SyntaxError('Invalid expression');
   }
-  isValid(formattedExp);
-  while (/\(/.test(formattedExp)) {
-    const match = formattedExp.match(/\(([^()]+)\)/);
 
-    if (match) {
-      const result = calculateExpression(match[1]);
+  return operandsArray.pop();
+};
 
-      formattedExp = formattedExp.replace(match[0], result);
-    }
-  }
-  try {
-    const rpnExp = infixToRPN(formattedExp);
-    const result = calculateRPN(rpnExp);
-
-    if (!result) return '';
-    if (Number.isNaN(result)) {
-      throw new SyntaxError('Invalid expression');
+const operators: any = {
+  '+': (a: number, b: number) => a + b,
+  '-': (a: number, b: number) => a - b,
+  '*': (a: number, b: number) => a * b,
+  '/': (a: number, b: number) => {
+    if (b === 0) {
+      throw new SyntaxError('Cannot divide by zero');
     }
 
-    return Number.isInteger(result)
-      ? result.toString()
-      : result.toFixed(calculationAccuracy);
-  } catch (e: unknown) {
-    const error = e as SyntaxError;
+    return a / b;
+  },
+  '%': (a: number, b: number) => {
+    if (b === 0) {
+      throw new SyntaxError('Cannot divide by zero');
+    }
 
-    throw new SyntaxError(error.message);
-  }
+    return a % b;
+  },
 };

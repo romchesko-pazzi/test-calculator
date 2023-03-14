@@ -28,10 +28,7 @@ export const History = () => {
       <Title>History</Title>
       {savedData.map(item => (
         <Element data-cy="historyElement" key={item.id}>
-          {`${item.previousOperand}`}
-          {`${item.operation}`}
-          {`${item.currentOperand}`}
-          {` = ${item.result}`}
+          {item.expression} = {item.result}
         </Element>
       ))}
     </HistoryBox>
