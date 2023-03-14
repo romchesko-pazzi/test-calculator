@@ -7,6 +7,54 @@ describe('Arithmetic operations', () => {
     cy.visit('/CC');
   });
 
+  it('should properly count long expression', () => {
+    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(9)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(5)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(3)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(6)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(2)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(10)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(14)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(15)').click();
+    cy.get('[data-cy = "prevOperand"]').should('be.empty');
+    cy.get('[data-cy = "currOperand"]').should(() => {
+      const res = calculateExpression('(6+5)*8-7/3');
+
+      expect(res).to.equal('85.667');
+    });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '85.667');
+  });
+
+  it('should properly count long expression without multiply sign', () => {
+    cy.get('[data-cy = "keyboard"] > :nth-child(3)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(4)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(3)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(6)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(9)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(10)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(14)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(15)').click();
+
+    cy.get('[data-cy = "prevOperand"]').should('be.empty');
+    cy.get('[data-cy = "currOperand"]').should(() => {
+      const res = calculateExpression('8(5+5)9+(8-6)/3');
+
+      expect(res).to.equal('720.667');
+    });
+  });
+
   it('should multiply properly', () => {
     cy.contains('5').click();
     cy.get('button').contains('.').click();
@@ -22,6 +70,7 @@ describe('Arithmetic operations', () => {
 
       expect(res).to.equal('3.360');
     });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '3.360');
   });
 
   it('should comply math operators', () => {
@@ -38,6 +87,7 @@ describe('Arithmetic operations', () => {
 
       expect(res).to.equal('75');
     });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '75');
   });
 
   it('should add up properly', () => {
@@ -58,6 +108,7 @@ describe('Arithmetic operations', () => {
 
       expect(res).to.equal('8.300');
     });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '8.300');
   });
 
   it('should subtract properly', () => {
@@ -74,6 +125,7 @@ describe('Arithmetic operations', () => {
 
       expect(res).to.equal('-35.500');
     });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '-35.500');
   });
 
   it('should divide properly', () => {
@@ -87,6 +139,7 @@ describe('Arithmetic operations', () => {
 
       expect(res).to.equal('0.222');
     });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '0.222');
   });
 
   it('should be an error "Cannot divide by zero"', () => {
@@ -111,7 +164,6 @@ describe('Arithmetic operations', () => {
     cy.contains('5').click();
     cy.contains(Operations.plus).click();
     cy.contains('4').click();
-    cy.contains(Operations.multiply).click();
     cy.contains(Brackets.leftBracket).click();
     cy.contains('8').click();
     cy.contains(Operations.remainderOfDivision).click();
@@ -120,9 +172,10 @@ describe('Arithmetic operations', () => {
     cy.contains('=').click();
     cy.get('[data-cy = "prevOperand"]').should('be.empty');
     cy.get('[data-cy = "currOperand"]').should(() => {
-      const res = calculateExpression('5+4*(8%3)');
+      const res = calculateExpression('5+4(8%3)');
 
       expect(res).to.equal('13');
     });
+    cy.get('[data-cy = "currOperand"]').should('have.text', '13');
   });
 });

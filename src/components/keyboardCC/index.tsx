@@ -12,7 +12,7 @@ export class KeyboardCC extends React.Component<IKeyboard, {}> {
       this.props;
 
     return (
-      <KeyboardBox>
+      <KeyboardBox data-cy="keyboard">
         {buttons.map(({ type, operation, digit, isCancelBtn }, index) => {
           switch (type) {
             case 'operation':

@@ -1,10 +1,20 @@
+import { addMultiplyToBrackets } from './addMultiplyToBrackets';
+
 import { calculationAccuracy } from 'constants/common';
-import { correctBrackets, removeExcess, tooMuchDots } from 'constants/regex';
+import {
+  correctBrackets,
+  digitBeforeOfAfterBracket,
+  removeExcess,
+  tooMuchDots,
+} from 'constants/regex';
 import { isValid } from 'utils/isValid';
 
 export const calculateExpression = (expression: string) => {
   let formattedExp = expression.replace(removeExcess, '').replace(correctBrackets, ')');
 
+  if (digitBeforeOfAfterBracket.test(formattedExp)) {
+    formattedExp = addMultiplyToBrackets(formattedExp);
+  }
   if (tooMuchDots.test(formattedExp)) {
     throw new SyntaxError('Invalid expression');
   }
@@ -22,7 +32,7 @@ export const calculateExpression = (expression: string) => {
     const rpnExp = infixToRPN(formattedExp);
     const result = calculateRPN(rpnExp);
 
-    if (!result) return '';
+    if (!result && result !== 0) return '';
     if (Number.isNaN(result)) {
       throw new SyntaxError('Invalid expression');
     }
@@ -41,7 +51,7 @@ const infixToRPN = (expression: string) => {
   const output = [];
   const stack = [];
 
-  const precedence: any = {
+  const precedence = {
     '+': 1,
     '-': 1,
     '*': 2,
@@ -59,7 +69,8 @@ const infixToRPN = (expression: string) => {
       while (
         stack.length &&
         stack[stack.length - 1] !== '(' &&
-        precedence[token] <= precedence[stack[stack.length - 1]]
+        precedence[token as keyof typeof precedence] <=
+          precedence[stack[stack.length - 1] as keyof typeof precedence]
       ) {
         output.push(stack.pop());
       }
@@ -97,10 +108,12 @@ const calculateRPN = (expression: string) => {
   const tokens = expression.split(/\s+/);
 
   for (const token of tokens) {
-    if (operators[token]) {
+    if (operators[token as keyof typeof operators]) {
       const [b, a] = [operandsArray.pop(), operandsArray.pop()];
 
-      operandsArray.push(operators[token](a, b));
+      operandsArray.push(
+        operators[token as keyof typeof operators](a as number, b as number),
+      );
     } else {
       operandsArray.push(parseFloat(token));
     }
@@ -113,7 +126,7 @@ const calculateRPN = (expression: string) => {
   return operandsArray.pop();
 };
 
-const operators: any = {
+const operators = {
   '+': (a: number, b: number) => a + b,
   '-': (a: number, b: number) => a - b,
   '*': (a: number, b: number) => a * b,
