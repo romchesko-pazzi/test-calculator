@@ -31,7 +31,6 @@ export const calculateExpression = expression => {
     const rpnExp = infixToRPN(formattedExp);
     const result = calculateRPN(rpnExp);
 
-    if (!result && result !== 0) return '';
     if (Number.isNaN(result)) {
       throw new SyntaxError('Invalid expression');
     }
