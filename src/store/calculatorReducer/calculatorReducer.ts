@@ -81,7 +81,7 @@ const slice = createSlice({
           result: state.currentOperand,
         };
 
-        state.savedData.unshift(obj);
+        state.savedData.unshift(obj as ILocalStorageData);
         const storedOperations = getDataFromLocalStorage('operationsHistoryFunction');
 
         storedOperations.unshift(obj);

@@ -1,25 +1,24 @@
 import { addMultiplyToBrackets } from './addMultiplyToBrackets';
 
-import { calculationAccuracy } from 'constants/common';
+import { calculationAccuracy, cutNegative } from 'constants/common';
 import {
   correctBrackets,
   digitBeforeOfAfterBracket,
+  negativeValue,
   removeExcess,
-  tooMuchDots,
+  negativeValueInBrackets,
 } from 'constants/regex';
 import { isValid } from 'utils/isValid';
 
-export const calculateExpression = (expression: string) => {
+export const calculateExpression = expression => {
   let formattedExp = expression.replace(removeExcess, '').replace(correctBrackets, ')');
 
   if (digitBeforeOfAfterBracket.test(formattedExp)) {
     formattedExp = addMultiplyToBrackets(formattedExp);
   }
-  if (tooMuchDots.test(formattedExp)) {
-    throw new SyntaxError('Invalid expression');
-  }
+
   isValid(formattedExp);
-  while (/\(/.test(formattedExp)) {
+  while (/\(/.test(formattedExp) && !negativeValue.test(formattedExp)) {
     const match = formattedExp.match(/\(([^()]+)\)/);
 
     if (match) {
@@ -40,16 +39,14 @@ export const calculateExpression = (expression: string) => {
     return Number.isInteger(result)
       ? result.toString()
       : result.toFixed(calculationAccuracy);
-  } catch (e: unknown) {
-    const error = e as SyntaxError;
-
-    throw new SyntaxError(error.message);
+  } catch (e) {
+    throw new SyntaxError(e.message);
   }
 };
 
-const infixToRPN = (expression: string) => {
-  const output = [];
-  const stack = [];
+const infixToRPN = expression => {
+  const operands = [];
+  const operatorsReverse = [];
 
   const precedence = {
     '+': 1,
@@ -59,62 +56,69 @@ const infixToRPN = (expression: string) => {
     '%': 2,
   };
 
-  const tokens = expression.split(/([-+*/%()])/);
+  const tokens = expression.split(/([-+*/%])/);
 
-  for (const token of tokens) {
-    if (/\s+/.test(token)) {
+  for (let i = 0; i < tokens.length; i += 1) {
+    if (/\s+/.test(tokens[i]) || tokens[i] === '') {
       continue;
     }
-    if (/[-+*/%]/.test(token)) {
+    if (/[-+*/%]/.test(tokens[i])) {
       while (
-        stack.length &&
-        stack[stack.length - 1] !== '(' &&
-        precedence[token as keyof typeof precedence] <=
-          precedence[stack[stack.length - 1] as keyof typeof precedence]
+        operatorsReverse.length &&
+        operatorsReverse[operatorsReverse.length - 1] !== '(' &&
+        precedence[tokens[i]] <= precedence[operatorsReverse[operatorsReverse.length - 1]]
       ) {
-        output.push(stack.pop());
+        operands.push(operatorsReverse.pop());
       }
-      stack.push(token);
-    } else if (token === '(') {
-      stack.push(token);
-    } else if (token === ')') {
-      while (stack.length && stack[stack.length - 1] !== '(') {
-        output.push(stack.pop());
+      operatorsReverse.push(tokens[i]);
+    } else if (tokens[i] === '(') {
+      const negative = tokens.splice(i, cutNegative);
+
+      operands.push(negative.join(''));
+      i -= 1;
+    } else if (tokens[i] === ')') {
+      while (
+        operatorsReverse.length &&
+        operatorsReverse[operatorsReverse.length - 1] !== '('
+      ) {
+        operands.push(operatorsReverse.pop());
       }
-      if (stack.length === 0) {
+      if (operatorsReverse.length === 0) {
         throw new SyntaxError('Unmatched parentheses');
       }
-      stack.pop();
+      operatorsReverse.pop();
     } else {
-      output.push(token);
+      operands.push(tokens[i]);
     }
   }
 
-  while (stack.length) {
-    const operator = stack.pop();
+  while (operatorsReverse.length) {
+    const operator = operatorsReverse.pop();
 
     if (operator === '(') {
       throw new SyntaxError('Unmatched parentheses');
     }
-    output.push(operator);
+    operands.push(operator);
   }
 
-  return output.join(' ');
+  return operands.join(' ');
 };
 
-const calculateRPN = (expression: string) => {
-  const operandsArray: number[] = [];
+const calculateRPN = expression => {
+  const operandsArray = [];
 
   const tokens = expression.split(/\s+/);
 
   for (const token of tokens) {
-    if (operators[token as keyof typeof operators]) {
+    if (operators[token]) {
       const [b, a] = [operandsArray.pop(), operandsArray.pop()];
 
-      operandsArray.push(
-        operators[token as keyof typeof operators](a as number, b as number),
-      );
+      operandsArray.push(operators[token](a, b));
     } else {
+      if (token.includes('(')) {
+        operandsArray.push(parseFloat(token.match(negativeValueInBrackets)[0]));
+        continue;
+      }
       operandsArray.push(parseFloat(token));
     }
   }
@@ -127,17 +131,17 @@ const calculateRPN = (expression: string) => {
 };
 
 const operators = {
-  '+': (a: number, b: number) => a + b,
-  '-': (a: number, b: number) => a - b,
-  '*': (a: number, b: number) => a * b,
-  '/': (a: number, b: number) => {
+  '+': (a, b) => a + b,
+  '-': (a, b) => a - b,
+  '*': (a, b) => a * b,
+  '/': (a, b) => {
     if (b === 0) {
       throw new SyntaxError('Cannot divide by zero');
     }
 
     return a / b;
   },
-  '%': (a: number, b: number) => {
+  '%': (a, b) => {
     if (b === 0) {
       throw new SyntaxError('Cannot divide by zero');
     }
