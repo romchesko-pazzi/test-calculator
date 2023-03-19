@@ -1,6 +1,6 @@
 import { Brackets } from 'constants/brackets';
 import { Operations } from 'constants/operations';
-import { calculateExpression } from 'utils/calculateExpressionFunction.js';
+import { calculateExpression } from 'utils/calculate/calculateExpression.js';
 
 describe('Arithmetic operations', () => {
   beforeEach(() => {
@@ -43,13 +43,13 @@ describe('Arithmetic operations', () => {
   });
 
   it('should add up properly', () => {
-    cy.get('button').contains(Brackets.leftBracket).click();
+    cy.get('button').contains(Brackets.openBracket).click();
     cy.get('button').contains('2').click();
     cy.get('button').contains(Operations.plus).click();
     cy.get('button').contains('0').click();
     cy.get('button').contains('.').click();
     cy.get('button').contains('3').click();
-    cy.get('button').contains(Brackets.rightBracket).click();
+    cy.get('button').contains(Brackets.closeBracket).click();
     cy.get('button').contains(Operations.plus).click();
     cy.get('button').contains('6').click();
     cy.get('button').contains(Operations.equals).click();
@@ -116,11 +116,11 @@ describe('Arithmetic operations', () => {
     cy.contains('5').click();
     cy.contains(Operations.plus).click();
     cy.contains('4').click();
-    cy.contains(Brackets.leftBracket).click();
+    cy.contains(Brackets.openBracket).click();
     cy.contains('8').click();
     cy.contains(Operations.remainderOfDivision).click();
     cy.contains('3').click();
-    cy.contains(Brackets.rightBracket).click();
+    cy.contains(Brackets.closeBracket).click();
     cy.contains('=').click();
     cy.get('[data-cy = "prevOperand"]').should('be.empty');
     cy.get('[data-cy = "currOperand"]').should(() => {
@@ -129,5 +129,26 @@ describe('Arithmetic operations', () => {
       expect(res).to.equal('13');
     });
     cy.get('[data-cy = "currOperand"]').should('have.text', '13');
+  });
+
+  it('should be an error "Unmatched parentheses"', () => {
+    cy.contains('5').click();
+    cy.contains(Operations.plus).click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
+    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
+    cy.contains('4').click();
+    cy.contains(Brackets.closeBracket).click();
+    cy.contains('=').click();
+    cy.get('[data-cy = "prevOperand"]').should('be.empty');
+    cy.get('[data-cy = "currOperand"]').should(() => {
+      try {
+        calculateExpression('5+((4)');
+      } catch (e: unknown) {
+        const error = e as SyntaxError;
+
+        expect(error.message).to.equal('Unmatched parentheses');
+      }
+    });
+    cy.get('[data-cy = "currOperand"]').should('have.text', 'Unmatched parentheses');
   });
 });

@@ -1,23 +1,17 @@
-import { calculateExpression } from 'utils/calculateExpressionFunction.js';
+import { calculateExpression } from 'utils/calculate/calculateExpression.js';
 
-describe('Arithmetic operations', () => {
+describe('Long expressions', () => {
   beforeEach(() => {
     cy.visit('/CC');
   });
 
   it('should properly count long expression', () => {
-    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(9)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(5)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(3)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(6)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(2)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(10)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(14)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(15)').click();
+    const keyboardCyChildren = [17, 9, 11, 8, 19, 5, 3, 6, 2, 10, 14, 15];
+
+    for (let i = 0; i < keyboardCyChildren.length; i += 1) {
+      cy.get(`[data-cy="keyboard"] > :nth-child(${keyboardCyChildren[i]})`).click();
+    }
+
     cy.get('[data-cy = "prevOperand"]').should('be.empty');
     cy.get('[data-cy = "currOperand"]').should(() => {
       const res = calculateExpression('(6+5)*8-7/3');
@@ -28,22 +22,11 @@ describe('Arithmetic operations', () => {
   });
 
   it('should properly count long expression without multiply sign', () => {
-    cy.get('[data-cy = "keyboard"] > :nth-child(3)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(4)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(3)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(6)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(9)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(10)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(14)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(15)').click();
+    const keyboardCyChildren = [3, 17, 8, 11, 8, 19, 4, 11, 17, 3, 6, 9, 19, 10, 14, 15];
+
+    for (let i = 0; i < keyboardCyChildren.length; i += 1) {
+      cy.get(`[data-cy="keyboard"] > :nth-child(${keyboardCyChildren[i]})`).click();
+    }
 
     cy.get('[data-cy = "prevOperand"]').should('be.empty');
     cy.get('[data-cy = "currOperand"]').should(() => {
@@ -54,22 +37,11 @@ describe('Arithmetic operations', () => {
   });
 
   it('should properly count long expression with negative values', () => {
-    cy.get('[data-cy = "keyboard"] > :nth-child(14)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(5)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(6)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(13)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(9)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(5)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(17)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(6)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(14)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(19)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(11)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(8)').click();
-    cy.get('[data-cy = "keyboard"] > :nth-child(15)').click();
+    const keyboardCyChildren = [14, 5, 17, 6, 13, 19, 11, 9, 5, 17, 6, 14, 19, 11, 8, 15];
+
+    for (let i = 0; i < keyboardCyChildren.length; i += 1) {
+      cy.get(`[data-cy="keyboard"] > :nth-child(${keyboardCyChildren[i]})`).click();
+    }
 
     cy.get('[data-cy = "prevOperand"]').should('be.empty');
     cy.get('[data-cy = "currOperand"]').should(() => {
