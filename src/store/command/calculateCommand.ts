@@ -1,11 +1,10 @@
+import { calculateExpression } from 'utils/calculate/calculateExpression';
+import { isDotInTheEnd } from 'utils/calculate/validate/isDotInTheEnd';
 import { v4 } from 'uuid';
 
 import { ICommand } from '../interfaces';
 
 import { GlobalState } from './globalState';
-
-import { calculateExpression } from 'utils/calculateExpressionFunction';
-import { isDotInTheEnd } from 'utils/isDotInTheEnd';
 
 export class CalculateCommand implements ICommand {
   private readonly expression: string;

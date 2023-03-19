@@ -1,4 +1,4 @@
-export const addMultiplyToBrackets = (expression: string) => {
+export const addMultiplyToBrackets = expression => {
   let modified = expression.replace(/([0-9])\(/g, '$1*(');
 
   modified = modified.replace(/\)(?!\s*[+\-*/])/g, ')*');

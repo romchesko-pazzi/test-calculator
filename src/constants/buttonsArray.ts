@@ -18,9 +18,9 @@ export const buttons = [
   { type: 'digit', isCancelBtn: false, digit: '3' },
   { type: 'operation', isCancelBtn: false, operation: Operations.equals },
   { type: 'digit', isCancelBtn: false, digit: '.' },
-  { type: 'digit', isCancelBtn: false, digit: Brackets.leftBracket },
+  { type: 'digit', isCancelBtn: false, digit: Brackets.openBracket },
   { type: 'digit', isCancelBtn: false, digit: '0' },
-  { type: 'digit', isCancelBtn: false, digit: Brackets.rightBracket },
+  { type: 'digit', isCancelBtn: false, digit: Brackets.closeBracket },
   { type: 'operation', isCancelBtn: false, operation: Operations.removeElement },
   { type: 'operation', isCancelBtn: false, operation: Operations.remainderOfDivision },
 ];

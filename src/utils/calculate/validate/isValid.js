@@ -1,6 +1,8 @@
 import { emptyBrackets, incorrectExpression, operations } from 'constants/regex';
 
-export const isValid = (expression: string) => {
+import { isBracketsValid } from './isBracketsValid.js';
+
+export const isValid = expression => {
   if (incorrectExpression.test(expression)) {
     throw new SyntaxError('Incorrect expression');
   }
@@ -9,5 +11,8 @@ export const isValid = (expression: string) => {
   }
   if (emptyBrackets.test(expression)) {
     throw new SyntaxError('Empty brackets in the expression');
+  }
+  if (!isBracketsValid(expression)) {
+    throw new SyntaxError('Unmatched parentheses');
   }
 };

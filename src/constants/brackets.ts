@@ -1,4 +1,4 @@
 export enum Brackets {
-  leftBracket = '(',
-  rightBracket = ')',
+  openBracket = '(',
+  closeBracket = ')',
 }
