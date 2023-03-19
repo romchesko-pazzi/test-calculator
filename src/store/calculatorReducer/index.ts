@@ -1,11 +1,11 @@
 import {
   addElement,
-  removeElement,
   chooseOperation,
   clearAll,
-  makeCalculations,
-  saveToStore,
   clearOperationsStore,
+  makeCalculations,
+  removeElement,
+  saveToStore,
 } from './calculatorReducer';
 
 export const calculatorActions = {

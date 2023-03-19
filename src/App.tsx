@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
 import { Route, Routes } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
-
-import { ThemeEnum } from './constants/themes';
-
 import { Global } from 'assets/global';
 import { darkTheme, lightTheme } from 'assets/theme';
-import { Header } from 'components/header';
 import { Home } from 'pages/home';
 import { HomeCC } from 'pages/homeCC';
 import { Settings } from 'pages/settings';
+import { ThemeProvider } from 'styled-components';
+
+import { Header } from 'components/header';
+
+import { ThemeEnum } from './constants/themes';
 
 export const App = () => {
   const [theme, setTheme] = useState(ThemeEnum.light);

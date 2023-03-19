@@ -1,10 +1,9 @@
 import React from 'react';
-
-import { IOperationButton } from '../../interfaces/operations';
-
 import { Button } from 'assets/buttons/buttonStyle';
 import { Operations } from 'constants/operations';
 import { globalState } from 'store/command/globalState';
+
+import { IOperationButton } from '../../interfaces/operations';
 
 export class OperationButtonCC extends React.Component<IOperationButton> {
   clickHandler = () => {

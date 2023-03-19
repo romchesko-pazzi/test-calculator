@@ -1,9 +1,4 @@
 import React from 'react';
-
-import { KeyboardCC } from '../keyboardCC';
-
-import { DisplayCC } from 'components/displayCC';
-import { HistoryComponentCC } from 'components/historyCC';
 import { Operations } from 'constants/operations';
 import {
   BorderRight,
@@ -16,6 +11,11 @@ import { globalState } from 'store/command/globalState';
 import { Invoker } from 'store/command/invoker';
 import { SaveCommand } from 'store/command/saveCommand';
 import { IClassState } from 'store/interfaces';
+
+import { DisplayCC } from 'components/displayCC';
+import { HistoryComponentCC } from 'components/historyCC';
+
+import { KeyboardCC } from '../keyboardCC';
 
 export class Calculator extends React.Component<{}, IClassState> {
   constructor(props: {}) {
@@ -41,7 +41,6 @@ export class Calculator extends React.Component<{}, IClassState> {
     }
 
     if (newValue === '0' && currentOperand === '0') return;
-    if (newValue === '.' && !currentOperand) return;
     if (newValue === '.' && currentOperand?.includes('.')) return;
 
     this.setState({

@@ -1,13 +1,13 @@
 import React from 'react';
+import { useAppSelector } from 'hooks/useSelector';
 
 import {
   CurrentOperand,
   DisplayBox,
+  Line,
   PreviousOperand,
   PreviousOperandBox,
-  Line,
 } from 'components/display/styled';
-import { useAppSelector } from 'hooks/useSelector';
 
 export const Display = () => {
   const currentOperand = useAppSelector(state => state.calculator.currentOperand);

@@ -1,8 +1,8 @@
+import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
+
 import { ICommand } from '../interfaces';
 
 import { GlobalState } from './globalState';
-
-import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
 
 export class SaveCommand implements ICommand {
   private readonly expression: string;

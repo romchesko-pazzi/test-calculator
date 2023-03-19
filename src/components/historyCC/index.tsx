@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { Element, HistoryBox, Title } from 'components/history/styled';
 import { ILocalStorageData } from 'store/interfaces';
 import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
+
+import { Element, HistoryBox, Title } from 'components/history/styled';
 
 interface IHistory {
   operationsHistory: ILocalStorageData[];

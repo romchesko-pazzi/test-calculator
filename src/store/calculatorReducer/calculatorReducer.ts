@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 } from 'uuid';
-
 import { Operations } from 'constants/operations';
 import { IInitState, ILocalStorageData } from 'store/interfaces';
-import { calculateExpression } from 'utils/calculateExpressionFunction';
+import { calculateExpression } from 'utils/calculate/calculateExpression';
+import { isDotInTheEnd } from 'utils/calculate/validate/isDotInTheEnd';
 import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
-import { isDotInTheEnd } from 'utils/isDotInTheEnd';
+import { v4 } from 'uuid';
 
 const initialState: IInitState = {
   currentOperand: null,
@@ -27,7 +26,6 @@ const slice = createSlice({
         return;
       }
       if (action.payload === '0' && state.currentOperand === '0') return state;
-      if (action.payload === '.' && !state.currentOperand) return;
       if (action.payload === '.' && state.currentOperand?.includes('.')) return;
       state.currentOperand = `${state.currentOperand || ''}${action.payload}`;
     },

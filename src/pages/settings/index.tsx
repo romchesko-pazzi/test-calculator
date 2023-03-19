@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeEnum } from 'constants/themes';
 
 import {
   ButtonsBox,
@@ -11,8 +12,6 @@ import {
   Title,
   Value,
 } from './styled';
-
-import { ThemeEnum } from 'constants/themes';
 
 export const Settings = ({ theme, setTheme }: ISettings) => {
   const [isOpen, setIsOpen] = useState(false);

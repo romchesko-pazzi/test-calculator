@@ -1,4 +1,5 @@
 import React from 'react';
+import { IBaseStore } from 'store/interfaces';
 
 import {
   CurrentOperand,
@@ -7,7 +8,6 @@ import {
   PreviousOperand,
   PreviousOperandBox,
 } from 'components/display/styled';
-import { IBaseStore } from 'store/interfaces';
 
 export class DisplayCC extends React.Component<IBaseStore> {
   render() {

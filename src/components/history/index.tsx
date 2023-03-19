@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import { useAppSelector } from 'hooks/useSelector';
+
+import { Element, HistoryBox, Title } from 'components/history/styled';
 
 import { useActions } from '../../hooks/useActions';
 import { calculatorActions } from '../../store/calculatorReducer';
 import { getDataFromLocalStorage } from '../../utils/getDataFromLocalStorage';
-
-import { Element, HistoryBox, Title } from 'components/history/styled';
-import { useAppSelector } from 'hooks/useSelector';
 
 export const History = () => {
   const savedData = useAppSelector(state => state.calculator.savedData);

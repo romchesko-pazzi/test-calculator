@@ -31,7 +31,8 @@
     "cypress": "cypress open",
     "cypressAll": "cypress run --browser=firefox",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-fix": "eslint --fix"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -66,12 +67,12 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.0",
     "prettier": "^2.8.4",
     "start-server-and-test": "^1.15.4",

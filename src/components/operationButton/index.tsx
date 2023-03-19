@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Button } from 'assets/buttons/buttonStyle';
 import { Operations } from 'constants/operations';
 import { useActions } from 'hooks/useActions';

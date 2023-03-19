@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { BorderRight, HomeWrapper, MainCalculateBlock, ToggleHistory } from './styled';
-
 import { Display } from 'components/display';
+import { ErrorFallback } from 'components/errorBoundary/errorFallback';
 import { History } from 'components/history';
 import { Keyboard } from 'components/keyboard';
-import { ErrorFallback } from 'utils/errorBoundary/errorFallback';
+
+import { BorderRight, HomeWrapper, MainCalculateBlock, ToggleHistory } from './styled';
 
 export const Home = () => {
   const [isHistoryShowed, setIsHistoryShowed] = useState(true);
