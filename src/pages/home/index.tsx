@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
-import { Display } from 'components/display';
-import { ErrorFallback } from 'components/errorBoundary/errorFallback';
-import { History } from 'components/history';
-import { Keyboard } from 'components/keyboard';
-
-import { BorderRight, HomeWrapper, MainCalculateBlock, ToggleHistory } from './styled';
+import {
+  BorderRight,
+  HomeWrapper,
+  MainCalculateBlock,
+  ToggleHistory,
+} from '@/assets/commonStyles/home';
+import { Display } from '@/components/Display';
+import { History } from '@/components/History';
+import { Keyboard } from '@/components/Keyboard';
 
 export const Home = () => {
   const [isHistoryShowed, setIsHistoryShowed] = useState(true);
+  const toggleHistory = () => setIsHistoryShowed(!isHistoryShowed);
 
   return (
     <HomeWrapper>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <MainCalculateBlock>
-          <Display />
-          <Keyboard />
-          <BorderRight />
-          <ToggleHistory
-            onClick={() => setIsHistoryShowed(!isHistoryShowed)}
-            isHistoryShowed={isHistoryShowed}
-          />
-        </MainCalculateBlock>
-        {isHistoryShowed && <History />}
-      </ErrorBoundary>
+      <MainCalculateBlock>
+        <Display />
+        <Keyboard />
+        <BorderRight />
+        <ToggleHistory onClick={toggleHistory} isHistoryShowed={isHistoryShowed} />
+      </MainCalculateBlock>
+      {isHistoryShowed && <History />}
     </HomeWrapper>
   );
 };

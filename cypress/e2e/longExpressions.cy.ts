@@ -1,4 +1,4 @@
-import { calculateExpression } from 'utils/calculate/calculateExpression.js';
+import { calculateExpression } from '@/utils/calculate/calculateExpression.js';
 
 describe('Long expressions', () => {
   beforeEach(() => {

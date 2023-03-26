@@ -107,6 +107,7 @@
         "no-debugger": "error",
         "no-unused-vars": "off",
         "no-use-before-define": "off",
+        "no-plusplus": "off",
         "no-param-reassign": [
             "error",
             {
@@ -169,7 +170,7 @@
         "simple-import-sort/imports": ["error", {
             "groups": [
                 // Packages `react` related packages come first.
-                ["^react", "^@?\\w"],
+                ["^react", "^styled-components", "^uuid", "^@?\\w"],
                 // Internal packages.
                 ["^(@|components)(/.*|$)"],
                 // Side effect imports.

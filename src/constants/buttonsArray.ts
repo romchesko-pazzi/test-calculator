@@ -1,26 +1,45 @@
-import { Brackets } from 'constants/brackets';
-import { Operations } from 'constants/operations';
+import { v4 } from 'uuid';
 
-export const buttons = [
-  { type: 'operation', isCancelBtn: true, operation: Operations.removeAll },
-  { type: 'digit', isCancelBtn: false, digit: '7' },
-  { type: 'digit', isCancelBtn: false, digit: '8' },
-  { type: 'digit', isCancelBtn: false, digit: '9' },
-  { type: 'operation', isCancelBtn: false, operation: Operations.multiply },
-  { type: 'operation', isCancelBtn: false, operation: Operations.minus },
-  { type: 'digit', isCancelBtn: false, digit: '4' },
-  { type: 'digit', isCancelBtn: false, digit: '5' },
-  { type: 'digit', isCancelBtn: false, digit: '6' },
-  { type: 'operation', isCancelBtn: false, operation: Operations.divide },
-  { type: 'operation', isCancelBtn: false, operation: Operations.plus },
-  { type: 'digit', isCancelBtn: false, digit: '1' },
-  { type: 'digit', isCancelBtn: false, digit: '2' },
-  { type: 'digit', isCancelBtn: false, digit: '3' },
-  { type: 'operation', isCancelBtn: false, operation: Operations.equals },
-  { type: 'digit', isCancelBtn: false, digit: '.' },
-  { type: 'digit', isCancelBtn: false, digit: Brackets.openBracket },
-  { type: 'digit', isCancelBtn: false, digit: '0' },
-  { type: 'digit', isCancelBtn: false, digit: Brackets.closeBracket },
-  { type: 'operation', isCancelBtn: false, operation: Operations.removeElement },
-  { type: 'operation', isCancelBtn: false, operation: Operations.remainderOfDivision },
+import { Brackets } from '@/constants/brackets';
+import { Operations } from '@/constants/operations';
+import { IButton } from '@/interfaces/buttons';
+
+export const buttons: IButton[] = [
+  { id: v4(), type: 'operation', isCancelBtn: true, operation: Operations.removeAll },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '7' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '8' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '9' },
+  { id: v4(), type: 'operation', isCancelBtn: false, operation: Operations.multiply },
+  { id: v4(), type: 'operation', isCancelBtn: false, operation: Operations.minus },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '4' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '5' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '6' },
+  { id: v4(), type: 'operation', isCancelBtn: false, operation: Operations.divide },
+  { id: v4(), type: 'operation', isCancelBtn: false, operation: Operations.plus },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '1' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '2' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '3' },
+  { id: v4(), type: 'operation', isCancelBtn: false, operation: Operations.equals },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '.' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: Brackets.openBracket },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: '0' },
+  { id: v4(), type: 'digit', isCancelBtn: false, digit: Brackets.closeBracket },
+  {
+    id: v4(),
+    type: 'operation',
+    isCancelBtn: false,
+    operation: Operations.removeElement,
+  },
+  {
+    id: v4(),
+    type: 'operation',
+    isCancelBtn: false,
+    operation: Operations.remainderOfDivision,
+  },
+  {
+    id: v4(),
+    type: 'operation',
+    isCancelBtn: false,
+    operation: Operations.changeSign,
+  },
 ];

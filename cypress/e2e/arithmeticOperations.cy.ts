@@ -1,6 +1,6 @@
-import { Brackets } from 'constants/brackets';
-import { Operations } from 'constants/operations';
-import { calculateExpression } from 'utils/calculate/calculateExpression.js';
+import { Brackets } from '@/constants/brackets';
+import { Operations } from '@/constants/operations';
+import { calculateExpression } from '@/utils/calculate/calculateExpression.js';
 
 describe('Arithmetic operations', () => {
   beforeEach(() => {

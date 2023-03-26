@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 
-import { ThemeEnum } from '../constants/themes';
-import { ITheme } from '../interfaces/styled';
+import { ThemeEnum } from '@/constants/themes';
+import { ITheme } from '@/interfaces/styled';
 
 const baseTheme: ITheme = {
   colors: {

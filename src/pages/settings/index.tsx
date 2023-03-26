@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
-import { ThemeEnum } from 'constants/themes';
+
+import { Dropdown } from '@/components/Dropdown';
+import { ThemeEnum } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 import {
   ButtonsBox,
   Caret,
   DropDownWrapper,
-  Option,
-  Options,
   RemoveButton,
   SettingsWrapper,
   Title,
   Value,
 } from './styled';
 
-export const Settings = ({ theme, setTheme }: ISettings) => {
+export const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const toggling = () => setIsOpen(!isOpen);
   const onBlurHandler = () => setIsOpen(false);
   const clearHistory = () => localStorage.clear();
 
-  const changeToLightHandler = () => {
-    localStorage.setItem('storedTheme', ThemeEnum.light);
-    setTheme(ThemeEnum.light);
-    setIsOpen(false);
-  };
-  const changeToDarkHandler = () => {
-    localStorage.setItem('storedTheme', ThemeEnum.dark);
-    setTheme(ThemeEnum.dark);
+  const changeTheme = (theme: ThemeEnum) => {
+    localStorage.setItem('storedTheme', theme);
+    setTheme(theme);
     setIsOpen(false);
   };
 
@@ -38,10 +35,7 @@ export const Settings = ({ theme, setTheme }: ISettings) => {
         <DropDownWrapper onClick={toggling} onBlur={onBlurHandler} tabIndex={0}>
           <Value>{theme}</Value>
           <Caret />
-          <Options display={isOpen ? 'block' : 'none'}>
-            <Option onClick={changeToLightHandler}>{ThemeEnum.light}</Option>
-            <Option onClick={changeToDarkHandler}>{ThemeEnum.dark}</Option>
-          </Options>
+          <Dropdown isOpen={isOpen} changeTheme={changeTheme} />
         </DropDownWrapper>
         <RemoveButton data-cy="removeBtn" onClick={clearHistory}>
           Clear all history
@@ -50,8 +44,3 @@ export const Settings = ({ theme, setTheme }: ISettings) => {
     </SettingsWrapper>
   );
 };
-
-interface ISettings {
-  theme: ThemeEnum;
-  setTheme: (arg: ThemeEnum) => void;
-}

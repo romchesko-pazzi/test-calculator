@@ -1,4 +1,4 @@
-import { ITheme, ThemeEnum } from 'interfaces/styled';
+import { ITheme, ThemeEnum } from '@/interfaces/styled';
 
 declare module 'styled-components' {
   export interface DefaultTheme extends ITheme {

@@ -1,4 +1,4 @@
-import { dotInTheEnd } from 'constants/regex';
+import { dotInTheEnd } from '@/constants/regex';
 
 export const isDotInTheEnd = expression => {
   if (dotInTheEnd.test(expression)) {

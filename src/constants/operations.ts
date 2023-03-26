@@ -7,4 +7,5 @@ export enum Operations {
   removeAll = 'C',
   removeElement = 'CE',
   remainderOfDivision = '%',
+  changeSign = '+-',
 }

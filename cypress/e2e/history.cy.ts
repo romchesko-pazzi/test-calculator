@@ -1,4 +1,4 @@
-import { Operations } from 'constants/operations';
+import { Operations } from '@/constants/operations';
 
 describe('History module', () => {
   beforeEach(() => {

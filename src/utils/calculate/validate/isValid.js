@@ -1,11 +1,8 @@
-import { emptyBrackets, incorrectExpression, operations } from 'constants/regex';
+import { emptyBrackets, operations } from '@/constants/regex';
 
-import { isBracketsValid } from './isBracketsValid.js';
+import { isBracketsValid } from './isBracketsValid';
 
 export const isValid = expression => {
-  if (incorrectExpression.test(expression)) {
-    throw new SyntaxError('Incorrect expression');
-  }
   if (operations.test(expression)) {
     throw new SyntaxError('Invalid location of the operator');
   }

@@ -14,10 +14,10 @@ export class Invoker {
     try {
       this.startCommand.execute();
       this.endCommand.execute();
-    } catch (e: unknown) {
-      const error = e as SyntaxError;
+    } catch (error: unknown) {
+      const syntaxError = error as SyntaxError;
 
-      console.log(error.message);
+      console.log(syntaxError.message);
     }
   }
 }

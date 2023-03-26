@@ -1,9 +1,9 @@
-import { Brackets } from 'constants/brackets';
+import { Brackets } from '@/constants/brackets';
 
 export const isBracketsValid = expression => {
   const bracketsStack = [];
 
-  for (let i = 0; i < expression.length; i += 1) {
+  for (let i = 0; i < expression.length; i++) {
     const element = expression[i];
 
     if (element === Brackets.openBracket) {

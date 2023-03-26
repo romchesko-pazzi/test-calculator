@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Operations } from 'constants/operations';
-import { IInitState, ILocalStorageData } from 'store/interfaces';
-import { calculateExpression } from 'utils/calculate/calculateExpression';
-import { isDotInTheEnd } from 'utils/calculate/validate/isDotInTheEnd';
-import { getDataFromLocalStorage } from 'utils/getDataFromLocalStorage';
 import { v4 } from 'uuid';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { Operations } from '@/constants/operations';
+import { IInitState, ILocalStorageData } from '@/store/interfaces';
+import { calculateExpression } from '@/utils/calculate/calculateExpression.js';
+import { isDotInTheEnd } from '@/utils/calculate/validate/isDotInTheEnd.js';
+import { getDataFromLocalStorage } from '@/utils/getDataFromLocalStorage';
 
 const initialState: IInitState = {
   currentOperand: null,
@@ -18,28 +19,28 @@ const slice = createSlice({
   name: 'calculator',
   initialState,
   reducers: {
-    addElement: (state, action: PayloadAction<string>) => {
-      if (state.isOverwrite && action.payload !== '.') {
-        state.currentOperand = action.payload;
+    addElement: (state, { payload }: PayloadAction<string>) => {
+      if (state.isOverwrite && payload !== '.') {
+        state.currentOperand = payload;
         state.isOverwrite = false;
 
         return;
       }
-      if (action.payload === '0' && state.currentOperand === '0') return state;
-      if (action.payload === '.' && state.currentOperand?.includes('.')) return;
-      state.currentOperand = `${state.currentOperand || ''}${action.payload}`;
+      if (payload === '0' && state.currentOperand === '0') return state;
+      if (payload === '.' && state.currentOperand?.includes('.')) return;
+      state.currentOperand = `${state.currentOperand || ''}${payload}`;
     },
     removeElement: state => {
       if (!state.currentOperand) return state;
       state.currentOperand = null;
     },
-    chooseOperation: (state, action: PayloadAction<Operations>) => {
+    chooseOperation: (state, { payload }: PayloadAction<Operations>) => {
       if (!state.currentOperand && !state.previousOperand) return state;
 
       if (state.currentOperand?.at(-1) === '.') {
         state.previousOperand = `${
           state.previousOperand || ''
-        }${state.currentOperand.slice(0, -1)}${action.payload}`;
+        }${state.currentOperand.slice(0, -1)}${payload}`;
         state.currentOperand = null;
 
         return;
@@ -47,20 +48,20 @@ const slice = createSlice({
 
       // если нужно сменить математическую операцию
       if (!state.currentOperand && state.previousOperand) {
-        state.previousOperand = state.previousOperand.slice(0, -1) + action.payload;
+        state.previousOperand = state.previousOperand.slice(0, -1) + payload;
 
         return;
       }
 
       if (!state.previousOperand) {
-        state.previousOperand = state.currentOperand + action.payload;
+        state.previousOperand = state.currentOperand + payload;
         state.currentOperand = null;
 
         return;
       }
-      state.previousOperand = `${state.previousOperand || ''}${state.currentOperand}${
-        action.payload
-      }`;
+      state.previousOperand = `${state.previousOperand || ''}${
+        state.currentOperand
+      }${payload}`;
       state.currentOperand = null;
     },
     makeCalculations: state => {
@@ -103,8 +104,8 @@ const slice = createSlice({
       state.currentOperand = null;
       state.previousOperand = null;
     },
-    saveToStore: (state, action: PayloadAction<ILocalStorageData[]>) => {
-      state.savedData.unshift(...action.payload);
+    saveToStore: (state, { payload }: PayloadAction<ILocalStorageData[]>) => {
+      state.savedData.unshift(...payload);
     },
     clearOperationsStore: state => {
       state.savedData = [];

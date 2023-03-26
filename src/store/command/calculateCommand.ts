@@ -1,6 +1,7 @@
-import { calculateExpression } from 'utils/calculate/calculateExpression';
-import { isDotInTheEnd } from 'utils/calculate/validate/isDotInTheEnd';
 import { v4 } from 'uuid';
+
+import { calculateExpression } from '@/utils/calculate/calculateExpression';
+import { isDotInTheEnd } from '@/utils/calculate/validate/isDotInTheEnd';
 
 import { ICommand } from '../interfaces';
 

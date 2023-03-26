@@ -1,4 +1,4 @@
-import { ThemeEnum } from 'constants/themes';
+import { ThemeEnum } from '@/constants/themes';
 
 describe('Change theme module', () => {
   it('theme should be changed', () => {

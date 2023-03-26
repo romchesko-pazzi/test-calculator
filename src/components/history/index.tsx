@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from 'hooks/useSelector';
 
-import { Element, HistoryBox, Title } from 'components/history/styled';
-
-import { useActions } from '../../hooks/useActions';
-import { calculatorActions } from '../../store/calculatorReducer';
-import { getDataFromLocalStorage } from '../../utils/getDataFromLocalStorage';
+import { Element, HistoryBox, Title } from '@/assets/commonStyles/history';
+import { useActions } from '@/hooks/useActions';
+import { useAppSelector } from '@/hooks/useSelector';
+import { calculatorActions } from '@/store/calculatorReducer';
+import { getDataFromLocalStorage } from '@/utils/getDataFromLocalStorage';
 
 export const History = () => {
   const savedData = useAppSelector(state => state.calculator.savedData);
@@ -26,9 +25,9 @@ export const History = () => {
   return (
     <HistoryBox data-cy="history">
       <Title>History</Title>
-      {savedData.map(item => (
-        <Element data-cy="historyElement" key={item.id}>
-          {item.expression} = {item.result}
+      {savedData.map(({ expression, id, result }) => (
+        <Element data-cy="historyElement" key={id}>
+          {expression} = {result}
         </Element>
       ))}
     </HistoryBox>
