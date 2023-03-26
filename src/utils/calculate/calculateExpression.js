@@ -14,6 +14,10 @@ export const calculateExpression = expression => {
   const tokens = tokenize(formattedExpression);
   const result = calculateLowPriorityOperators(tokens);
 
+  if (Number.isNaN(result)) {
+    throw new SyntaxError('Invalid expression');
+  }
+
   return Number.isInteger(result)
     ? result.toString()
     : result.toFixed(calculationAccuracy);

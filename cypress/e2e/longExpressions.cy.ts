@@ -37,7 +37,7 @@ describe('Long expressions', () => {
   });
 
   it('should properly count long expression with negative values', () => {
-    const keyboardCyChildren = [14, 5, 17, 6, 13, 19, 11, 9, 5, 17, 6, 14, 19, 11, 8, 15];
+    const keyboardCyChildren = [14, 5, 7, 7, 22, 11, 9, 5, 4, 18, 18, 22, 10, 12, 13, 15];
 
     for (let i = 0; i < keyboardCyChildren.length; i += 1) {
       cy.get(`[data-cy="keyboard"] > :nth-child(${keyboardCyChildren[i]})`).click();
@@ -45,10 +45,10 @@ describe('Long expressions', () => {
 
     cy.get('[data-cy = "prevOperand"]').should('be.empty');
     cy.get('[data-cy = "currOperand"]').should(() => {
-      const res = calculateExpression('3*(-2)+6*(-3)+5');
+      const res = calculateExpression('3*(-44)+6*(-900)/12');
 
-      expect(res).to.equal('-19');
+      expect(res).to.equal('-582');
     });
-    cy.get('[data-cy = "currOperand"]').should('have.text', '-19');
+    cy.get('[data-cy = "currOperand"]').should('have.text', '-582');
   });
 });
