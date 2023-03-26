@@ -1,9 +1,9 @@
-export const getDataFromLocalStorage = (key: StoredDataType) => {
+import { LocalStorageKeys } from '@/interfaces/localStorageKeys';
+
+export const getOperationsHistory = (key: LocalStorageKeys) => {
   const dataFromLocalStorage = localStorage.getItem(key);
 
   if (!dataFromLocalStorage) return [];
 
   return JSON.parse(dataFromLocalStorage);
 };
-
-type StoredDataType = 'operationsHistoryClass' | 'operationsHistoryFunction';

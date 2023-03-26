@@ -10,7 +10,7 @@ import { IOperationButton } from './interface';
 
 export const OperationButton = memo(
   ({ operationType, isCancelBtn }: IOperationButton) => {
-    const { clearAll, chooseOperation, makeCalculations, removeElement } =
+    const { clearAll, chooseOperation, makeCalculations, removeElement, changeSign } =
       useActions(calculatorActions);
     const isError = useAppSelector(state => state.calculator.isError);
 
@@ -24,6 +24,9 @@ export const OperationButton = memo(
           break;
         case Operations.equals:
           makeCalculations();
+          break;
+        case Operations.changeSign:
+          changeSign();
           break;
         default:
           chooseOperation(operationType);

@@ -1,4 +1,5 @@
-import { getDataFromLocalStorage } from '@/utils/getDataFromLocalStorage';
+import { getOperationsHistory } from '@/utils/localStorage/getOperationsHistory';
+import { setItemToLocalStorage } from '@/utils/localStorage/setItemToLocalStorage';
 
 import { ICommand } from '../interfaces';
 
@@ -15,9 +16,9 @@ export class SaveCommand implements ICommand {
   }
 
   execute() {
-    const parsed = getDataFromLocalStorage('operationsHistoryClass');
+    const parsed = getOperationsHistory('operationsHistoryClass');
     const newArr = [this.state, ...parsed];
 
-    localStorage.setItem('operationsHistoryClass', JSON.stringify(newArr));
+    setItemToLocalStorage('operationsHistoryClass', JSON.stringify(newArr));
   }
 }

@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '@/assets/theme';
 import { ThemeEnum } from '@/constants/themes';
 import { ITheme } from '@/context/themeProvider/interface';
+import { getTheme } from '@/utils/localStorage/getTheme';
 
 const defaultState = {
   theme: ThemeEnum.light,
@@ -17,7 +18,7 @@ export const Theme = ({ children }: { children: ReactNode }) => {
   const currentTheme = theme === ThemeEnum.light ? lightTheme : darkTheme;
 
   useEffect(() => {
-    const themeFromLs = localStorage.getItem('storedTheme');
+    const themeFromLs = getTheme();
 
     if (themeFromLs) {
       setTheme(themeFromLs as ThemeEnum);

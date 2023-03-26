@@ -4,14 +4,14 @@ import { Element, HistoryBox, Title } from '@/assets/commonStyles/history';
 import { useActions } from '@/hooks/useActions';
 import { useAppSelector } from '@/hooks/useSelector';
 import { calculatorActions } from '@/store/calculatorReducer';
-import { getDataFromLocalStorage } from '@/utils/getDataFromLocalStorage';
+import { getOperationsHistory } from '@/utils/localStorage/getOperationsHistory';
 
 export const History = () => {
   const savedData = useAppSelector(state => state.calculator.savedData);
   const { saveToStore, clearOperationsStore } = useActions(calculatorActions);
 
   useEffect(() => {
-    const storedData = getDataFromLocalStorage('operationsHistoryFunction');
+    const storedData = getOperationsHistory('operationsHistoryFunction');
 
     if (storedData) {
       saveToStore(storedData);

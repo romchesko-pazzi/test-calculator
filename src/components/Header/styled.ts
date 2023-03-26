@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
@@ -19,4 +20,12 @@ export const SwitchBlock = styled.div`
   align-items: center;
   min-width: 30rem;
   font-size: 2rem;
+`;
+
+export const StyledNavLink = styled(NavLink)`
+  &.active {
+    color: #ffffff;
+    font-weight: 500;
+    border-bottom: 1px white solid;
+  }
 `;

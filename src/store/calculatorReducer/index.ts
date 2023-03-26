@@ -1,5 +1,6 @@
 import {
   addElement,
+  changeSign,
   chooseOperation,
   clearAll,
   clearOperationsStore,
@@ -16,6 +17,7 @@ export const calculatorActions = {
   makeCalculations,
   saveToStore,
   clearOperationsStore,
+  changeSign,
 };
 
 export { calculatorReducer } from './calculatorReducer';

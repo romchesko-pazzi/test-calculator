@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Dropdown } from '@/components/Dropdown';
 import { ThemeEnum } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
+import { setItemToLocalStorage } from '@/utils/localStorage/setItemToLocalStorage';
 
 import {
   ButtonsBox,
@@ -23,7 +24,7 @@ export const Settings = () => {
   const clearHistory = () => localStorage.clear();
 
   const changeTheme = (theme: ThemeEnum) => {
-    localStorage.setItem('storedTheme', theme);
+    setItemToLocalStorage('storedTheme', theme);
     setTheme(theme);
     setIsOpen(false);
   };

@@ -1,31 +1,17 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
-import { HeaderWrapper, SwitchBlock, Title } from './styled';
+import { HeaderWrapper, StyledNavLink, SwitchBlock, Title } from './styled';
 
 export const Header = () => {
-  const activeStyle = {
-    color: '#ffffff',
-    fontWeight: 500,
-    borderBottom: '1px white solid',
-  };
-  const isStyleActive = ({ isActive }: { isActive: boolean }) =>
-    isActive ? activeStyle : undefined;
-
   return (
     <>
       <HeaderWrapper>
         <Title>Calculator App</Title>
         <SwitchBlock>
-          <NavLink to="/" style={isStyleActive}>
-            HomeFC
-          </NavLink>
-          <NavLink to="/CC" style={isStyleActive}>
-            HomeCC
-          </NavLink>
-          <NavLink to="settings" style={isStyleActive}>
-            Settings
-          </NavLink>
+          <StyledNavLink to="/">HomeFC</StyledNavLink>
+          <StyledNavLink to="/CC">HomeCC</StyledNavLink>
+          <StyledNavLink to="settings">Settings</StyledNavLink>
         </SwitchBlock>
       </HeaderWrapper>
       <Outlet />

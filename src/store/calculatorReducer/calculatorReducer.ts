@@ -1,11 +1,13 @@
 import { v4 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { Brackets } from '@/constants/brackets';
+import { removeCloseBracket, removeOpenBracketAndMinus } from '@/constants/common';
 import { Operations } from '@/constants/operations';
 import { IInitState, ILocalStorageData } from '@/store/interfaces';
 import { calculateExpression } from '@/utils/calculate/calculateExpression.js';
 import { isDotInTheEnd } from '@/utils/calculate/validate/isDotInTheEnd.js';
-import { getDataFromLocalStorage } from '@/utils/getDataFromLocalStorage';
+import { saveToHistory } from '@/utils/localStorage/saveToHistory';
 
 const initialState: IInitState = {
   currentOperand: null,
@@ -37,66 +39,38 @@ const slice = createSlice({
     chooseOperation: (state, { payload }: PayloadAction<Operations>) => {
       if (!state.currentOperand && !state.previousOperand) return state;
 
-      if (state.currentOperand?.at(-1) === '.') {
-        state.previousOperand = `${
-          state.previousOperand || ''
-        }${state.currentOperand.slice(0, -1)}${payload}`;
+      const currentOperand = state.currentOperand?.replace('.', '');
+      const previousOperand = state.previousOperand || '';
+
+      if (!currentOperand && previousOperand) {
+        state.previousOperand = previousOperand.slice(0, -1) + payload;
+      } else if (!previousOperand) {
+        state.previousOperand = currentOperand + payload;
         state.currentOperand = null;
-
-        return;
-      }
-
-      // если нужно сменить математическую операцию
-      if (!state.currentOperand && state.previousOperand) {
-        state.previousOperand = state.previousOperand.slice(0, -1) + payload;
-
-        return;
-      }
-
-      if (!state.previousOperand) {
-        state.previousOperand = state.currentOperand + payload;
+      } else {
+        state.previousOperand = previousOperand + currentOperand + payload;
         state.currentOperand = null;
-
-        return;
       }
-      state.previousOperand = `${state.previousOperand || ''}${
-        state.currentOperand
-      }${payload}`;
-      state.currentOperand = null;
     },
     makeCalculations: state => {
-      if (!state.currentOperand || !state.previousOperand) {
-        return state;
-      }
+      if (!state.currentOperand || !state.previousOperand) return state;
+
       const expression = isDotInTheEnd(state.previousOperand + state.currentOperand);
 
       try {
-        state.currentOperand = calculateExpression(expression);
+        const result = calculateExpression(expression);
 
-        // save to history
-        const obj = {
-          id: v4(),
-          expression,
-          result: state.currentOperand,
-        };
-
-        state.savedData.unshift(obj as ILocalStorageData);
-        const storedOperations = getDataFromLocalStorage('operationsHistoryFunction');
-
-        storedOperations.unshift(obj);
-        localStorage.setItem(
-          'operationsHistoryFunction',
-          JSON.stringify(storedOperations),
-        );
-
+        state.currentOperand = result;
+        state.savedData.unshift({ id: v4(), expression, result });
+        saveToHistory(expression, result);
         state.previousOperand = null;
         state.isOverwrite = true;
-      } catch (e: unknown) {
-        const error = e as SyntaxError;
+      } catch (error: unknown) {
+        const syntaxError = error as SyntaxError;
 
         state.isError = true;
         state.previousOperand = null;
-        state.currentOperand = error.message;
+        state.currentOperand = syntaxError.message;
       }
     },
     clearAll: state => {
@@ -110,6 +84,17 @@ const slice = createSlice({
     clearOperationsStore: state => {
       state.savedData = [];
     },
+    changeSign: state => {
+      if (!state.currentOperand) return;
+      if (!state.currentOperand?.includes('-')) {
+        state.currentOperand = `${Brackets.openBracket}${Operations.minus}${state.currentOperand}${Brackets.closeBracket}`;
+      } else {
+        state.currentOperand = state.currentOperand.slice(
+          removeOpenBracketAndMinus,
+          removeCloseBracket,
+        );
+      }
+    },
   },
 });
 
@@ -122,4 +107,5 @@ export const {
   makeCalculations,
   saveToStore,
   clearOperationsStore,
+  changeSign,
 } = slice.actions;

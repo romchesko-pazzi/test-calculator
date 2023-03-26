@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Element, HistoryBox, Title } from '@/assets/commonStyles/history';
 import { ILocalStorageData } from '@/store/interfaces';
-import { getDataFromLocalStorage } from '@/utils/getDataFromLocalStorage';
+import { getOperationsHistory } from '@/utils/localStorage/getOperationsHistory';
 
 export class HistoryComponentCC extends Component<
   {},
@@ -16,7 +16,7 @@ export class HistoryComponentCC extends Component<
   }
 
   componentDidMount() {
-    const dataFromLocalStorage = getDataFromLocalStorage('operationsHistoryClass');
+    const dataFromLocalStorage = getOperationsHistory('operationsHistoryClass');
 
     this.setState({
       operationsHistory: dataFromLocalStorage,
@@ -27,7 +27,7 @@ export class HistoryComponentCC extends Component<
     nextProps: {},
     nextState: { operationsHistory: ILocalStorageData[] },
   ) {
-    const dataFromLocalStorage = getDataFromLocalStorage('operationsHistoryClass');
+    const dataFromLocalStorage = getOperationsHistory('operationsHistoryClass');
     const { operationsHistory } = this.state;
 
     if (operationsHistory.length !== dataFromLocalStorage.length) {
