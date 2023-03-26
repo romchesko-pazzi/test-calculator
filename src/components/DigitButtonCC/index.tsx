@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { Button } from '@/assets/buttons/buttonStyle';
 import { globalState } from '@/store/command/globalState';
 
 import { IDigitButton } from './interface';
 
-export class DigitButtonCC extends Component<IDigitButton> {
+export class DigitButtonCC extends PureComponent<IDigitButton> {
   clickHandler = () => {
     const { digit, callback } = this.props;
 
