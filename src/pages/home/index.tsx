@@ -7,8 +7,8 @@ import {
   ToggleHistory,
 } from '@/assets/commonStyles/home';
 import { Display } from '@/components/Display';
-import { History } from '@/components/History';
-import { Keyboard } from '@/components/Keyboard';
+import { History } from '@/components/history1';
+import { Keyboard } from '@/components/keyboard1';
 
 export const Home = () => {
   const [isHistoryShowed, setIsHistoryShowed] = useState(true);
