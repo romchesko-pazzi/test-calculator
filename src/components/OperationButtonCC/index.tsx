@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
 import { Button } from '@/assets/buttons/buttonStyle';
 import { Operations } from '@/constants/operations';
 import { IOperationButton } from '@/interfaces/operations';
 import { globalState } from '@/store/command/globalState';
 
-export class OperationButtonCC extends PureComponent<IOperationButton> {
+export class OperationButtonCC extends Component<IOperationButton> {
   clickHandler = () => {
     const {
       operationType,

@@ -103,10 +103,10 @@ describe('Arithmetic operations', () => {
     cy.get('[data-cy = "currOperand"]').should(() => {
       try {
         calculateExpression('6/0');
-      } catch (e: unknown) {
-        const error = e as SyntaxError;
+      } catch (error: unknown) {
+        const syntaxError = error as SyntaxError;
 
-        expect(error.message).to.equal('Cannot divide by zero');
+        expect(syntaxError.message).to.equal('Cannot divide by zero');
       }
     });
     cy.get('[data-cy = "currOperand"]').should('have.text', 'Cannot divide by zero');
@@ -143,10 +143,10 @@ describe('Arithmetic operations', () => {
     cy.get('[data-cy = "currOperand"]').should(() => {
       try {
         calculateExpression('5+((4)');
-      } catch (e: unknown) {
-        const error = e as SyntaxError;
+      } catch (error: unknown) {
+        const syntaxError = error as SyntaxError;
 
-        expect(error.message).to.equal('Unmatched parentheses');
+        expect(syntaxError.message).to.equal('Unmatched parentheses');
       }
     });
     cy.get('[data-cy = "currOperand"]').should('have.text', 'Unmatched parentheses');

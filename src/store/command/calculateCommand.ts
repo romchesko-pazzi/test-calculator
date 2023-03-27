@@ -25,14 +25,14 @@ export class CalculateCommand implements ICommand {
       this.state.id = v4();
       this.state.expression = `${expression} = ${this.state.result}`;
       this.state.isError = false;
-    } catch (e: unknown) {
-      const error = e as SyntaxError;
+    } catch (error: unknown) {
+      const syntaxError = error as SyntaxError;
 
-      this.state.result = error.message;
+      this.state.result = syntaxError.message;
       this.state.id = '';
       this.state.expression = '';
       this.state.isError = true;
-      throw new SyntaxError(error.message);
+      throw new SyntaxError(syntaxError.message);
     }
   }
 }
