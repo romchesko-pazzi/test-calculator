@@ -39,16 +39,15 @@ const slice = createSlice({
     chooseOperation: (state, { payload }: PayloadAction<Operations>) => {
       if (!state.currentOperand && !state.previousOperand) return state;
 
-      const currentOperand = state.currentOperand?.replace('.', '');
-      const previousOperand = state.previousOperand || '';
+      state.currentOperand = isDotInTheEnd(state.currentOperand);
 
-      if (!currentOperand && previousOperand) {
-        state.previousOperand = previousOperand.slice(0, -1) + payload;
-      } else if (!previousOperand) {
-        state.previousOperand = currentOperand + payload;
+      if (!state.currentOperand && state.previousOperand) {
+        state.previousOperand = state.previousOperand.slice(0, -1) + payload;
+      } else if (!state.previousOperand) {
+        state.previousOperand = state.currentOperand + payload;
         state.currentOperand = null;
       } else {
-        state.previousOperand = previousOperand + currentOperand + payload;
+        state.previousOperand = state.previousOperand + state.currentOperand + payload;
         state.currentOperand = null;
       }
     },

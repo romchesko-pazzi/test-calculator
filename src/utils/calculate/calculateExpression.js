@@ -1,6 +1,6 @@
 import { Brackets } from '@/constants/brackets';
-import { calculationAccuracy, specificFrom, specificTo } from '@/constants/common';
 import { Operations } from '@/constants/operations';
+import { convertToReadable } from '@/utils/calculate/convertBigNumbers';
 import { isValid } from '@/utils/calculate/validate/isValid.js';
 
 export const calculateExpression = expression => {
@@ -18,7 +18,7 @@ export const calculateExpression = expression => {
     throw new SyntaxError('Invalid expression');
   }
 
-  return isExponential(result);
+  return convertToReadable(result);
 };
 
 const tokenize = str => str.match(/\d+(\.\d+)?|[-()+*/%]/g);
@@ -96,26 +96,3 @@ const checkBracketsAndNegative = tokens => {
 
   return sign * value;
 };
-
-const isExponential = num => {
-  const numStr = num.toString();
-
-  if (!numStr.includes('e')) {
-    if (isInRange(num)) {
-      const calculationAccuracy = 6;
-
-      return num.toFixed(calculationAccuracy);
-    }
-
-    return Number.isInteger(num) ? num.toString() : num.toFixed(calculationAccuracy);
-  }
-  const [number, exponent] = num
-    .toExponential(
-      Number.isInteger(+numStr.split('e')[0]) ? undefined : calculationAccuracy,
-    )
-    .split('e');
-
-  return `${number}x10^${+exponent}`;
-};
-
-const isInRange = num => num >= specificFrom && num <= specificTo;
