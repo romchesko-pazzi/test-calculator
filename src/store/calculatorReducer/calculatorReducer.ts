@@ -40,8 +40,9 @@ const slice = createSlice({
       if (!state.currentOperand && !state.previousOperand) return state;
 
       state.currentOperand = isDotInTheEnd(state.currentOperand);
-
-      if (!state.currentOperand && state.previousOperand) {
+      if (state.currentOperand?.includes('^')) {
+        state.currentOperand = null;
+      } else if (!state.currentOperand && state.previousOperand) {
         state.previousOperand = state.previousOperand.slice(0, -1) + payload;
       } else if (!state.previousOperand) {
         state.previousOperand = state.currentOperand + payload;

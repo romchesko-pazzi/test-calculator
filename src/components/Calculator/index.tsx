@@ -53,7 +53,9 @@ export class Calculator extends Component<{}, IClassState> {
     const { currentOperand, previousOperand } = this.state;
 
     if (!currentOperand && !previousOperand) return;
-    if (currentOperand?.at(-1) === '.') {
+    if (currentOperand?.includes('^')) {
+      this.setState({ currentOperand: null });
+    } else if (currentOperand?.endsWith('.')) {
       this.setState({
         previousOperand: `${previousOperand || ''}${currentOperand.slice(
           0,
@@ -61,31 +63,19 @@ export class Calculator extends Component<{}, IClassState> {
         )}${operationArg}`,
         currentOperand: null,
       });
-
-      return;
-    }
-
-    // если нужно сменить математическую операцию
-    if (!currentOperand && previousOperand) {
-      this.setState({
-        previousOperand: previousOperand.slice(0, -1) + operationArg,
-      });
-
-      return;
-    }
-
-    if (!previousOperand) {
+    } else if (!currentOperand && previousOperand) {
+      this.setState({ previousOperand: previousOperand.slice(0, -1) + operationArg });
+    } else if (!previousOperand) {
       this.setState({
         previousOperand: currentOperand + operationArg,
         currentOperand: null,
       });
-
-      return;
+    } else {
+      this.setState({
+        previousOperand: `${previousOperand || ''}${currentOperand}${operationArg}`,
+        currentOperand: null,
+      });
     }
-    this.setState({
-      previousOperand: `${previousOperand || ''}${currentOperand}${operationArg}`,
-      currentOperand: null,
-    });
   };
 
   makeCalculations = () => {

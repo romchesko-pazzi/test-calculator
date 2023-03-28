@@ -1,6 +1,6 @@
 import { Brackets } from '@/constants/brackets';
 import { Operations } from '@/constants/operations';
-import { convertToReadable } from '@/utils/calculate/convertBigNumbers';
+import { convertToReadable } from '@/utils/calculate/convertBigNumbers.js';
 import { isValid } from '@/utils/calculate/validate/isValid.js';
 
 export const calculateExpression = expression => {
