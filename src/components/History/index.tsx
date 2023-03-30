@@ -20,7 +20,7 @@ export const History = () => {
     return () => {
       clearOperationsStore();
     };
-  }, []);
+  }, [clearOperationsStore, saveToStore]);
 
   return (
     <HistoryBox data-cy="history">

@@ -4,12 +4,11 @@ import { convertToReadable } from '@/utils/calculate/convertBigNumbers.js';
 import { isValid } from '@/utils/calculate/validate/isValid.js';
 
 export const calculateExpression = expression => {
-  let formattedExpression = expression.replace(/(\D|^)\.(\d+)/g, '$10.$2');
-
-  formattedExpression = formattedExpression
+  const formattedExpression = expression
     .replace(/(?<=\d|\))\(/g, '*(')
     .replace(/\)(?=\d)/g, ')*')
     .replace(/(\D|^)\.(\d+)/g, '$10.$2');
+
   isValid(formattedExpression);
   const tokens = tokenize(formattedExpression);
   const result = calculateLowPriorityOperators(tokens);
