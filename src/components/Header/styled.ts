@@ -1,11 +1,15 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const HeaderWrapper = styled.div`
-  background-color: ${props => props.theme.colors.headerBackground};
+const flexCenter = `
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const HeaderWrapper = styled.div`
+  background-color: ${props => props.theme.colors.headerBackground};
+  ${flexCenter};
   color: #ffffff;
   padding: 2rem;
 `;
@@ -15,9 +19,7 @@ export const Title = styled.h1`
 `;
 
 export const SwitchBlock = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  ${flexCenter};
   min-width: 30rem;
   font-size: 2rem;
 `;
